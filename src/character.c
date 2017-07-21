@@ -87,6 +87,20 @@ void move_character(Character *character, int movement){
 
     }
 
+    //Check and correct if required the new coordinates of the character
+    if(character->pos_x < -(character->w/2))
+        character->pos_x = -(character->w/2);
+
+    if(character->pos_x > WINDOW_WIDTH-(character->w/2))
+        character->pos_x = WINDOW_WIDTH-(character->w/2);
+
+    if(character->pos_y < -(character->h/2))
+        character->pos_y = -(character->h/2);
+
+    if(character->pos_y > WINDOW_HEIGHT-(character->h/2))
+        character->pos_y = WINDOW_HEIGHT-(character->h/2);
+
+
     //End of function
     return;
 
