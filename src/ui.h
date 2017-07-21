@@ -15,13 +15,13 @@
 /**
  * Variables definition
  */
-#define NUMBER_TEXTURES 5
+#define NUMBER_TEXTURES 6
 #define TEXTURE_GRASS 0
 #define TEXTURE_BACKGROUND 1
 #define TEXTURE_LOADING_MSG 2
 #define TEXTURE_MAIN_CHARACTER 3
 #define TEXTURE_MENU 4
-
+#define TEXTURE_PAUSED_MENU 5
 
 /**
  * Initializate the SDL library plus create programm windows & renderer

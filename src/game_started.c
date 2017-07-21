@@ -12,6 +12,7 @@
 #include "main_character.h"
 #include "character.h"
 #include "game_started.h"
+#include "game_paused.h"
 #include "game.h"
 
 /**
@@ -79,11 +80,15 @@ void game_started_handle_events(SDL_Event *event){
                     main_character_move(MOVE_CHARACTER_DOWN);
                 break;
 
+                //Pause the game
+                case SDLK_ESCAPE:
+                case SDLK_p:
+                    game_paused_pause();
+                break;
 
                 //Go back to the main menu
-                case SDLK_ESCAPE:
-                game_started_stop();
-                break;
+                //game_started_stop();
+                //break;
 
             }
         break;

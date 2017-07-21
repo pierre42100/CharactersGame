@@ -13,7 +13,7 @@
 /**
  * Variables definition
  */
-SDL_Renderer *renderer = NULL;
+static SDL_Renderer *renderer = NULL;
 
 /**
  * Display game menu

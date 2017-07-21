@@ -13,6 +13,7 @@
 #include "character.h"
 #include "game_menu.h"
 #include "game_started.h"
+#include "game_paused.h"
 #include "game.h"
 
 //This variables defines if the application has to be left or not
@@ -110,9 +111,14 @@ void game_handle_event(SDL_Event *event){
             game_started_handle_events(event);
         break;
 
-        //Currently, the game menu is shown
+        //The user is in the menu of the application
         case GAME_STATE_MENU:
             game_menu_handle_events(event);
+        break;
+
+        //The user has paused the game
+        case GAME_STATE_PAUSED:
+            game_paused_handle_events(event);
         break;
     }
 
@@ -143,9 +149,14 @@ void game_refresh_screen(){
             game_started_refresh_window();
         break;
 
-        //Currently, the game menu is shown
+        //The user is in the menu of the application
         case GAME_STATE_MENU:
             game_menu_display();
+        break;
+
+        //The user has paused the game
+        case GAME_STATE_PAUSED:
+            game_paused_display();
         break;
     }
 
