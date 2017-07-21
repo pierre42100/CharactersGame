@@ -15,11 +15,12 @@
 /**
  * Variables definition
  */
-#define NUMBER_TEXTURES 4
+#define NUMBER_TEXTURES 5
 #define TEXTURE_GRASS 0
 #define TEXTURE_BACKGROUND 1
 #define TEXTURE_LOADING_MSG 2
 #define TEXTURE_MAIN_CHARACTER 3
+#define TEXTURE_MENU 4
 
 
 /**
@@ -67,6 +68,14 @@ SDL_Texture* ui_get_pointer_on_texture(int texture_number);
  * @return void (Fatal error in case of failure)
  */
 void ui_load_image_into_texture(const char *filename, int target_texture);
+
+/**
+ * Check if a texture was loaded or not
+ *
+ * @param int texture_number The number of the texture to check
+ * @return int 1 = yes / 0 = no
+ */
+int ui_is_texture_loaded(int texture_number);
 
 /**
  * Load game background into a texture

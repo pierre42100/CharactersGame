@@ -11,13 +11,18 @@
 #include "config.h"
 #include "main_character.h"
 #include "character.h"
+#include "game_menu.h"
+#include "game_started.h"
 #include "game.h"
 
-//This variables defines if the game has to be left or not
-static int quit_game = 0;
+//This variables defines if the application has to be left or not
+static int quit_app = 0;
 
 //This variable stores when a window refreshing is required
 static int need_window_refresh = 1;
+
+//This variable knows if the games has started or not
+static int game_state = GAME_STATE_MENU;
 
 /**
  * Initializate game
@@ -25,26 +30,15 @@ static int need_window_refresh = 1;
 void game_init(){
 
     //Inform about what is happening
-    log_message(LOG_VERBOSE, "Initializating game...");
+    log_message(LOG_VERBOSE, "Initializating application...");
 
     //Initializate the SDL library
     ui_init();
 
     //Load the background
     ui_load_background();
-
-    //Display loading message
-    ui_display_loading_message();
-
-    //Load main character
-    main_character_create();
-
-    //Inform the game is ready
-    log_message(LOG_VERBOSE, "Game ready.");
-
-    //End of intialization
-    return;
 }
+
 
 /**
  * Game loop (handles events happening during the game and process them)
@@ -69,9 +63,9 @@ void game_loop(){
         game_handle_event(&event);
 
         //Check if we have to quit game
-        if(quit_game == 1){
+        if(quit_app == 1){
             //Inform user
-            log_message(LOG_MESSAGE, "A request has been made to quit the game.");
+            log_message(LOG_MESSAGE, "A request has been made to quit the application.");
 
             break;
         }
@@ -96,6 +90,9 @@ void game_quit(){
     //Quit UI
     ui_quit();
 
+    //Exit game
+    exit(EXIT_SUCCESS);
+
 }
 
 /**
@@ -104,54 +101,30 @@ void game_quit(){
  * @param SDL_Event *event The event to handles
  */
 void game_handle_event(SDL_Event *event){
-    //Determine the nature of the current event
-    switch(event->type){
 
-        //Check if it is a keyboard eventd
-        case SDL_KEYDOWN:
+    //Check the current game state and adapt the action to do
+    switch(game_state){
 
-            //The window will certainly need to be refreshed
-            need_window_refresh = 1;
-
-            switch(event->key.keysym.sym){
-
-                //To go right
-                case SDLK_RIGHT:
-                case SDLK_d:
-                    main_character_move(MOVE_CHARACTER_RIGHT);
-                break;
-
-                //To go left
-                case SDLK_LEFT:
-                case SDLK_q:
-                    main_character_move(MOVE_CHARACTER_LEFT);
-                break;
-
-                //To go up
-                case SDLK_UP:
-                case SDLK_z:
-                    main_character_move(MOVE_CHARACTER_UP);
-                break;
-
-                //To go down
-                case SDLK_DOWN:
-                case SDLK_w:
-                    main_character_move(MOVE_CHARACTER_DOWN);
-                break;
-
-
-
-            }
+        //The game is started
+        case GAME_STATE_STARTED:
+            game_started_handle_events(event);
         break;
 
-        //To quit the game
-        case SDL_QUIT:
-            //Change quit variable to true
-            quit_game = 1;
+        //Currently, the game menu is shown
+        case GAME_STATE_MENU:
+            game_menu_handle_events(event);
         break;
-
     }
 
+}
+
+/**
+ * Specify wether wether the screen should be updated or not
+ *
+ * @param int need 1 = yes / 0 = no
+ */
+void game_screen_to_update(int need){
+    need_window_refresh = need == 1 ? 1 : 0;
 }
 
 /**
@@ -162,10 +135,30 @@ void game_refresh_screen(){
     //Display game background
     ui_display_background();
 
-    //Display the main character
-    main_character_display();
+    //Check the current game state and adapt the action to do
+    switch(game_state){
+
+        //The game is started
+        case GAME_STATE_STARTED:
+            game_started_refresh_window();
+        break;
+
+        //Currently, the game menu is shown
+        case GAME_STATE_MENU:
+            game_menu_display();
+        break;
+    }
 
     //Refresh the screen
     ui_refresh_window();
 
+}
+
+/**
+ * Update game state
+ *
+ * @param int new_state The new state of the game
+ */
+void game_update_state(int new_state){
+    game_state = new_state;
 }

@@ -27,7 +27,7 @@ void main_character_create(){
         fatal_error("Couldn't allocate memory for the main character!");
 
     //Create the character
-    *main_character = load_character(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
+    *main_character = character_load(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
 
     //Place the character on the center of the screen
     main_character->pos_x = (WINDOW_WIDTH-main_character->w)/2;
@@ -38,6 +38,19 @@ void main_character_create(){
 
     //End of function
     return;
+
+}
+
+/**
+ * Destroy the main character
+ */
+void main_character_destroy(){
+
+    //Destroy the character
+    character_destroy(main_character);
+
+    //Reset cursor
+    main_character = NULL;
 
 }
 
@@ -56,5 +69,16 @@ void main_character_display(){
  */
 void main_character_move(int movement){
     //Move the character
-    move_character(main_character, movement);
+    character_move(main_character, movement);
+}
+
+/**
+ * Set new location for the main character
+ *
+ * @param int x
+ * @param int y > Coordinates of the new location
+ */
+void main_character_set_location(int x, int y){
+    main_character->pos_x = x;
+    main_character->pos_y = y;
 }

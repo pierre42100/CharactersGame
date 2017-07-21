@@ -160,6 +160,16 @@ void ui_load_image_into_texture(const char *filename, int target_texture){
 }
 
 /**
+ * Check if a texture was loaded or not
+ *
+ * @param int texture_number The number of the texture to check
+ * @return int 1 = yes / 0 = no
+ */
+int ui_is_texture_loaded(int texture_number){
+    return textures[texture_number] == NULL ? 0 : 1;
+}
+
+/**
  * Get the pointer on the renderer
  *
  * @return SDL_Renderer *renderer Pointer on renderer

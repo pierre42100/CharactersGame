@@ -18,7 +18,7 @@
  * @param int target_texture The ID of the target texture for the character
  * @return Character The created character
  */
-Character load_character(const char *filename, int target_texture){
+Character character_load(const char *filename, int target_texture){
 
     //Create the character
     Character new_character;
@@ -52,12 +52,12 @@ Character load_character(const char *filename, int target_texture){
 
 
 /**
- * Moves a characer
+ * Moves a character
  *
  * @param Character *character The character to move
  * @param int movement The movement to perform
  */
-void move_character(Character *character, int movement){
+void character_move(Character *character, int movement){
 
     //Log action (verbose)
     log_message(LOG_VERBOSE, "Move a character");
@@ -103,5 +103,17 @@ void move_character(Character *character, int movement){
 
     //End of function
     return;
+
+}
+
+/**
+ * Destroy a character
+ *
+ * @param Character *character The character to destroy
+ */
+void character_destroy(Character *character){
+
+    //Free memory
+    free(character);
 
 }

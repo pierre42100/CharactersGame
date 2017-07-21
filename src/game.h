@@ -7,10 +7,25 @@
  * @author Pierre HUBERT
  */
 
+#include <SDL2/SDL.h>
+
+/**
+ * Define game states
+ */
+#define GAME_STATE_MENU 0
+#define GAME_STATE_STARTED 1
+
 /**
  * Initializate game
  */
 void game_init();
+
+/**
+ * Update game state
+ *
+ * @param int new_state The new state of the game
+ */
+void game_update_state(int new_state);
 
 /**
  * Game loop (handles events happening during the game and process them)
@@ -21,6 +36,13 @@ void game_loop();
  * Quit game
  */
 void game_quit();
+
+/**
+ * Specify wether wether the screen should be updated or not
+ *
+ * @param int need 1 = yes / 0 = no
+ */
+void game_screen_to_update(int need);
 
 /**
  * Refresh game screen
