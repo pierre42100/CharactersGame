@@ -65,6 +65,15 @@ void ui_quit(){
     //Message
     log_message(LOG_VERBOSE, "Terminate UI.");
 
+    //Destroy all textures
+    for(int i = 0; i < NUMBER_TEXTURES; i++){
+        //Destroy the texture only if it exists
+        if(textures[i] != NULL){
+            SDL_DestroyTexture(textures[i]);
+        }
+
+    }
+
     //Destroy renderer (if it exists)
     if(renderer != NULL)
         SDL_DestroyRenderer(renderer);
@@ -79,6 +88,40 @@ void ui_quit(){
 
     //End of function
     return;
+}
+
+/**
+ * Set the window icon
+ *
+ * @param const char *filename The name of the image to use as an icon
+ */
+void ui_set_window_icon(const char *filename){
+
+    //Verbose message
+    log_message(LOG_VERBOSE, "Setting window icon.");
+
+    //Create required variables
+    SDL_Surface *image = NULL;
+
+    image = IMG_Load(filename);
+
+    //Check for errors
+    if(image == NULL)
+        fatal_error("Couldn't load required image ! (to use as programm icon)");
+
+    //Set window icon
+    SDL_SetWindowIcon(window, image);
+
+    //Free memory
+    SDL_FreeSurface(image);
+
+}
+
+/**
+ * Refresh the window
+ */
+void ui_refresh_window(){
+    SDL_RenderPresent(renderer);
 }
 
 /**
@@ -113,6 +156,29 @@ void ui_load_image_into_texture(const char *filename, int target_texture){
     //Check for errors
     if(textures[target_texture] == NULL)
         fatal_error("Couldn't copy a surface into a texture !");
+
+}
+
+/**
+ * Get the pointer on the renderer
+ *
+ * @return SDL_Renderer *renderer Pointer on renderer
+ */
+SDL_Renderer* ui_get_renderer(){
+
+    return renderer;
+
+}
+
+/**
+ * Get the pointer on a texture entry
+ *
+ * @param int texture_number The number of the texture to get
+ * @return SDL_Texture* Pointer on the desired texture
+ */
+SDL_Texture* ui_get_pointer_on_texture(int texture_number){
+
+    return textures[texture_number];
 
 }
 
@@ -175,7 +241,56 @@ void ui_display_background(){
     //Display the bakcground
     SDL_RenderCopy(renderer, textures[TEXTURE_BACKGROUND], NULL, NULL);
 
-    //Refresh screen
-    SDL_RenderPresent(renderer);
+}
+
+/**
+ * Display UI loading message
+ */
+void ui_display_loading_message(){
+
+    //Verbose message
+    log_message(LOG_VERBOSE, "Display a loading message on the screen");
+
+    //First, load background
+    ui_display_background();
+
+    //Load the loading message image if required
+    if(textures[TEXTURE_LOADING_MSG] == NULL){
+        ui_load_image_into_texture(RES_DIRECTORY"loading_msg.png", TEXTURE_LOADING_MSG);
+    }
+
+    SDL_SetRenderTarget(renderer, NULL);
+
+    //Prepare message copy
+    //Get informations about the texture
+    int msg_width, msg_height;
+    SDL_QueryTexture(textures[TEXTURE_LOADING_MSG], NULL, NULL, &msg_width, &msg_height);
+
+    //Define destination AREA
+    SDL_Rect target_area = {(WINDOW_WIDTH-msg_width)/2, (WINDOW_HEIGHT-msg_height)/2, msg_width, msg_height};
+
+    //Copy texture
+    SDL_RenderCopy(renderer, textures[TEXTURE_LOADING_MSG], NULL, &target_area);
+
+    //Refresh the screen
+    ui_refresh_window();
+}
+
+/**
+ * Display a character
+ *
+ * @param Character character The character to display
+ * @return void (Fatal error in case of failure)
+ */
+void character_display(Character *character){
+
+    //Set right render target
+    SDL_SetRenderTarget(renderer, NULL);
+
+    //Prepare the application
+    SDL_Rect target_area = {character->pos_x, character->pos_y, character->w, character->h};
+
+    //Apply character
+    SDL_RenderCopy(renderer, character->texture, NULL, &target_area);
 
 }
