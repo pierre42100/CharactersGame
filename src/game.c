@@ -18,6 +18,10 @@ void game_init(){
     //Initializate the SDL library
     ui_init();
 
+    //Load the background
+    ui_load_background();
+    ui_display_background();
+
     //End of intialization
     return;
 }

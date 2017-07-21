@@ -27,6 +27,17 @@ int main(){
     //Initializate game
     game_init();
 
+    SDL_Event event;
+
+    while(1==1){
+
+        SDL_WaitEvent(&event);
+        if(event.type == SDL_QUIT)
+            break;
+
+    }
+
+
     //Quit game
     game_quit();
 

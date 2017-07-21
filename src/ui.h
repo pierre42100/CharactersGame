@@ -8,6 +8,13 @@
 #ifndef UI_H_INCLUDED
 #define UI_H_INCLUDED
 
+/**
+ * Variables definition
+ */
+#define NUMBER_TEXTURES 2
+#define TEXTURE_GRASS 0
+#define TEXTURE_BACKGROUND 1
+
 
 /**
  * Initializate the SDL library plus create programm windows & renderer
@@ -18,5 +25,24 @@ void ui_init();
  * Terminate and close UI
  */
 void ui_quit();
+
+/**
+ * Load an image and save it in a texture
+ *
+ * @param const char *filename The name of the image to load
+ * @param int target_texture The target texture of the image
+ * @return void (Fatal error in case of failure)
+ */
+void ui_load_image_into_texture(const char *filename, int target_texture);
+
+/**
+ * Load game background into a texture
+ */
+void ui_load_background();
+
+/**
+ * Display the background on the screen (clean it)
+ */
+void ui_display_background();
 
 #endif // UI_H_INCLUDED

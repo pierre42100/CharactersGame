@@ -15,7 +15,7 @@
 
 //Game window
 #define WINDOW_WIDTH 800
-#define WINDOW_HEIGH 600
+#define WINDOW_HEIGHT 600
 
 
 #endif // CONFIG_H_INCLUDED
