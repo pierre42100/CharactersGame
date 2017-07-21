@@ -27,5 +27,12 @@ void game_quit();
  */
 void game_refresh_screen();
 
+/**
+ * Handle game events
+ *
+ * @param SDL_Event *event The event to handles
+ */
+void game_handle_event(SDL_Event *event);
+
 
 #endif // GAME_H_INCLUDED

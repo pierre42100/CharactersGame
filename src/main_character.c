@@ -33,6 +33,9 @@ void main_character_create(){
     main_character->pos_x = (WINDOW_WIDTH-main_character->w)/2;
     main_character->pos_y = (WINDOW_HEIGHT-main_character->h)/2;
 
+    //Increase character speed
+    main_character->speed = 10;
+
     //End of function
     return;
 
@@ -44,4 +47,14 @@ void main_character_create(){
 void main_character_display(){
     //Display the main character
     character_display(main_character);
+}
+
+/**
+ * Move the main character
+ *
+ * @param int movement The movement to perform
+ */
+void main_character_move(int movement){
+    //Move the character
+    move_character(main_character, movement);
 }

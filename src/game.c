@@ -5,11 +5,19 @@
  */
 
 #include <SDL2/SDL.h>
+
 #include "logging.h"
 #include "ui.h"
 #include "config.h"
 #include "main_character.h"
+#include "character.h"
 #include "game.h"
+
+//This variables defines if the game has to be left or not
+static int quit_game = 0;
+
+//This variable stores when a window refreshing is required
+static int need_window_refresh = 1;
 
 /**
  * Initializate game
@@ -57,16 +65,22 @@ void game_loop(){
         //Wait for an event
         SDL_WaitEvent(&event);
 
-        //Determine the nature of the current event
-        switch(event.type){
+        //Handle event
+        game_handle_event(&event);
 
-            //To quit the game
-            case SDL_QUIT:
-                return; //Quit function
+        //Check if we have to quit game
+        if(quit_game == 1){
+            //Inform user
+            log_message(LOG_MESSAGE, "A request has been made to quit the game.");
+
             break;
-
         }
 
+        //Check if it is required to refresh screen
+        if(need_window_refresh == 1){
+            game_refresh_screen();
+            need_window_refresh = 0;
+        }
     }
 
 }
@@ -84,6 +98,61 @@ void game_quit(){
 
 }
 
+/**
+ * Handle game events
+ *
+ * @param SDL_Event *event The event to handles
+ */
+void game_handle_event(SDL_Event *event){
+    //Determine the nature of the current event
+    switch(event->type){
+
+        //Check if it is a keyboard eventd
+        case SDL_KEYDOWN:
+
+            //The window will certainly need to be refreshed
+            need_window_refresh = 1;
+
+            switch(event->key.keysym.sym){
+
+                //To go right
+                case SDLK_RIGHT:
+                case SDLK_d:
+                    main_character_move(MOVE_CHARACTER_RIGHT);
+                break;
+
+                //To go left
+                case SDLK_LEFT:
+                case SDLK_q:
+                    main_character_move(MOVE_CHARACTER_LEFT);
+                break;
+
+                //To go up
+                case SDLK_UP:
+                case SDLK_z:
+                    main_character_move(MOVE_CHARACTER_UP);
+                break;
+
+                //To go down
+                case SDLK_DOWN:
+                case SDLK_w:
+                    main_character_move(MOVE_CHARACTER_DOWN);
+                break;
+
+
+
+            }
+        break;
+
+        //To quit the game
+        case SDL_QUIT:
+            //Change quit variable to true
+            quit_game = 1;
+        break;
+
+    }
+
+}
 
 /**
  * Refresh game screen

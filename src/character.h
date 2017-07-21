@@ -25,8 +25,19 @@ struct Character {
     int w;
     int h;
 
+    //Character speed
+    int speed;
+
 };
 typedef struct Character Character;
+
+/**
+ * Define character movements
+ */
+#define MOVE_CHARACTER_LEFT 1
+#define MOVE_CHARACTER_RIGHT 2
+#define MOVE_CHARACTER_UP 3
+#define MOVE_CHARACTER_DOWN 4
 
 
 /**
@@ -37,5 +48,13 @@ typedef struct Character Character;
  * @return Character The created character
  */
 Character load_character(const char *filename, int target_texture);
+
+/**
+ * Moves a characer
+ *
+ * @param Character *character The character to move
+ * @param int movement The movement to perform
+ */
+void move_character(Character *character, int movement);
 
 #endif // CHARACTER_H_INCLUDED

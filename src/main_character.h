@@ -18,4 +18,11 @@ void main_character_create();
  */
 void main_character_display();
 
+/**
+ * Move the main character
+ *
+ * @param int movement The movement to perform
+ */
+void main_character_move(int movement);
+
 #endif // MAIN_CHARACTER_H_INCLUDED
