@@ -38,7 +38,8 @@ int file_get_contents(char **targetString, const char *filename){
     file_length = (int) determine_file_length(file);
 
     //Allocate memory to read file
-    file_content = malloc((file_length+1)*sizeof(char));
+    *targetString = malloc((file_length+1)*sizeof(char));
+    file_content = *targetString;
 
     //Check the memory was allocated
     if(file_content == NULL){
@@ -70,11 +71,6 @@ int file_get_contents(char **targetString, const char *filename){
 
     //Log action
     log_message(LOG_VERBOSE, "Terminated to read a file.");
-
-    *targetString = malloc(strlen(file_content));
-    strcpy(*targetString, file_content);
-    puts(*targetString);
-
 
     //The operation is a success
     return 0;
