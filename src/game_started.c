@@ -5,15 +5,14 @@
  */
 
 #include <SDL2/SDL.h>
-
-#include "lib/jsmn/jsmn.h"
+#include <string.h>
 
 #include "config.h"
 #include "logging.h"
 #include "ui.h"
-#include "utils.h"
 #include "main_character.h"
 #include "character.h"
+#include "json.h"
 #include "game_started.h"
 #include "game_paused.h"
 #include "game.h"
@@ -34,7 +33,7 @@ void game_started_start(){
 
     //Parse JSON file
     char json_file[] = "game.json";
-    parse_game_json_file(json_file);
+    json_parse_game_file(json_file);
 
     //Update game state
     game_update_state(GAME_STATE_STARTED);
@@ -131,26 +130,4 @@ void game_started_handle_events(SDL_Event *event){
 void game_started_refresh_window(){
     //Display the main character
     main_character_display();
-}
-
-/**
- * Parse game JSON file
- *
- * @param const char *filename The name of the file to parse
- */
-void parse_game_json_file(const char *filename){
-
-    //Create required variables
-    char *json_content = NULL;
-
-    //Log action
-    log_message(LOG_MESSAGE, "Parsing a game file");
-
-    //Get the file content
-    file_get_contents(&json_content, filename);
-
-    puts(json_content);
-
-    //Free memory
-    free(json_content);
 }

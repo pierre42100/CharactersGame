@@ -61,6 +61,7 @@ void game_menu_handle_events(SDL_Event *event){
 
                 //B : quit the application
                 case SDLK_b:
+                case SDLK_ESCAPE:
                 game_quit();
                 break;
 
