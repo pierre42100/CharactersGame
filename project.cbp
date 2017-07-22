@@ -51,6 +51,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/game_menu.h" />
+		<Unit filename="src/game_paused.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/game_paused.h" />
+		<Unit filename="src/game_started.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/game_started.h" />
 		<Unit filename="src/logging.c">
 			<Option compilerVar="CC" />
 		</Unit>

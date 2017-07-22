@@ -32,6 +32,20 @@ void main_character_display();
 void main_character_set_location(int x, int y);
 
 /**
+ * Set new abscisse for the main character
+ *
+ * @param int x
+ */
+void main_character_set_pos_x(int x);
+
+/**
+ * Set new ordonee for the main character
+ *
+ * @param int y
+ */
+void main_character_set_pos_y(int y);
+
+/**
  * Move the main character
  *
  * @param int movement The movement to perform

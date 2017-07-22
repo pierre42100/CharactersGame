@@ -6,9 +6,12 @@
 
 #include <SDL2/SDL.h>
 
+#include "lib/jsmn/jsmn.h"
+
 #include "config.h"
 #include "logging.h"
 #include "ui.h"
+#include "utils.h"
 #include "main_character.h"
 #include "character.h"
 #include "game_started.h"
@@ -29,6 +32,10 @@ void game_started_start(){
     //Load main character
     main_character_create();
 
+    //Parse JSON file
+    char json_file[] = "game.json";
+    parse_game_json_file(json_file);
+
     //Update game state
     game_update_state(GAME_STATE_STARTED);
 
@@ -37,6 +44,22 @@ void game_started_start(){
 
     //End of intialization
     return;
+}
+
+/**
+ * Stop the current game
+ */
+void game_started_stop(){
+
+    //Log action
+    log_message(LOG_VERBOSE, "Stopping game.");
+
+    //Destroy main character
+    main_character_destroy();
+
+    //Update game state
+    game_update_state(GAME_STATE_MENU);
+
 }
 
 /**
@@ -111,17 +134,23 @@ void game_started_refresh_window(){
 }
 
 /**
- * Stop the current game
+ * Parse game JSON file
+ *
+ * @param const char *filename The name of the file to parse
  */
-void game_started_stop(){
+void parse_game_json_file(const char *filename){
+
+    //Create required variables
+    char *json_content = NULL;
 
     //Log action
-    log_message(LOG_VERBOSE, "Stopping game.");
+    log_message(LOG_MESSAGE, "Parsing a game file");
 
-    //Destroy main character
-    main_character_destroy();
+    //Get the file content
+    file_get_contents(&json_content, filename);
 
-    //Update game state
-    game_update_state(GAME_STATE_MENU);
+    puts(json_content);
 
+    //Free memory
+    free(json_content);
 }

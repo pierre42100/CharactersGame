@@ -82,3 +82,21 @@ void main_character_set_location(int x, int y){
     main_character->pos_x = x;
     main_character->pos_y = y;
 }
+
+/**
+ * Set new abscisse for the main character
+ *
+ * @param int x
+ */
+void main_character_set_pos_x(int x){
+    main_character->pos_x = x;
+}
+
+/**
+ * Set new ordonee for the main character
+ *
+ * @param int y
+ */
+void main_character_set_pos_y(int y){
+    main_character->pos_y = y;
+}
