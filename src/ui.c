@@ -146,7 +146,7 @@ void ui_load_image_into_texture(const char *filename, int target_texture){
     if(image == NULL){
         fatal_error("Couldn't load required image !");
     }
-    log_message(LOG_ERROR, filename);
+
     //Copy the image into the desired texture
     textures[target_texture] = SDL_CreateTextureFromSurface(renderer, image);
 

@@ -13,7 +13,10 @@
 #include "logging.h"
 #include "utils.h"
 #include "json.h"
+
 #include "characters/main_character.h"
+#include "characters/wall.h"
+
 
 /**
  * Parse game JSON file
@@ -101,6 +104,60 @@ void json_parse_game_file(const char *filename){
 }
 
 /**
+ * Check if a JSON key value correspond to a specified JSON key value
+ *
+ * @param const char *json_string The JSON string to use
+ * @param jsmntok_t *tok The token to check
+ * @param const char *key_value The value of the key
+ * @return int 0 = The two keys are the same / -1 = The keys are different
+ */
+int json_check_two_keys(const char *json_string, jsmntok_t *tok, const char *key_value){
+    return (
+
+        tok->type == JSMN_STRING && //Check token type
+        (int) strlen(key_value) == tok->end - tok->start && //Check string size
+        strncmp(json_string + tok->start, key_value, tok->end - tok->start) == 0 //Check string value
+
+    ) ? 0 : -1;
+}
+
+/**
+ * Retrieve an integer of a JSON chain related to a specified key
+ *
+ * @param const char *json_string The source JSON string
+ * @param jsmntok_t *tok The reference tokn
+ * @return int -1 in case of failure / Specified number else
+ */
+int json_extract_integer(const char *json_string, jsmntok_t *token){
+
+    //Declare variables
+    char *string = NULL;
+    int number = -1;
+
+    //Check the current key is a primitive integer
+    if(token->type != JSMN_PRIMITIVE)
+        return -1; //The operation can't succeed
+
+    //Allocate memory
+    string = malloc(((token->end)-(token->start)+1)*sizeof(char));
+
+    if(string == NULL)
+        fatal_error("Couldn't allocate memory for a string !");
+
+    //Extract the key value and convert it into an integer
+    strncpy(string, json_string + token->start, token->end - token->start);
+    string[token->end - token->start] = '\0'; //Make sure the string is ended correctly
+    number = atoi(string);
+
+    //Free memory
+    free(string);
+
+    //Return result
+    return number;
+
+}
+
+/**
  * Parse JSON results
  *
  * @param jsmn_parser *parser The parser associated to the results
@@ -168,6 +225,90 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
             i += object_tokens_number; //For all the key name of the object
 
         }
+
+        //If informations are about the walls
+        else if(json_check_two_keys(json_string, &tokens[i], "walls") == 0){
+
+            //If the next item isn't an object we report an error
+            if(tokens[i+1].type != JSMN_ARRAY){
+                log_message(LOG_ERROR, "Array excepted after token 'walls' !");
+
+                continue;
+            }
+
+            //Update main counter
+            i++; //To upgrade to main_character object (that contains other properties)
+
+            //Process each element of the array
+            int array_entries = tokens[i].size;
+            for(int j = 1; j <= array_entries; j++){
+
+                //Check if array entry is an object or not
+                if(tokens[i + j].type != JSMN_OBJECT){
+                    log_message(LOG_ERROR, "'walls' array entries must be of type 'array' and not anything else !");
+                    continue; //Skip entry
+                }
+
+                //Declare wall informations
+                int wall_pos_x = -1;
+                int wall_pos_y = -1;
+
+                //Process wall object
+                int wall_infos_size = tokens[i + j].size;
+                for(int k = 1; k <= wall_infos_size; k++){
+
+                    //Base count
+                    int count = i + j + k;
+
+                    //Determine the kind of value
+                    //X_axis coordinate
+                    if(json_check_two_keys(json_string, &tokens[count], "pos_x") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        wall_pos_x = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Y_axis coordinate
+                    else if(json_check_two_keys(json_string, &tokens[count], "pos_y") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        wall_pos_y = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Unexcepted error
+                    else {
+                        char errorMessage[100];
+                        sprintf(errorMessage, "Parse error : walls->array_element->property_name : Unrecognised value '%.*s' !",
+                         tokens[count].end - tokens[count].start, json_string + tokens[count].start);
+                        log_message(LOG_ERROR, errorMessage);
+                    }
+
+                    //Increment counter by one
+                    i++;
+
+
+                }
+
+                //Increment i for each object proprety key
+                i += wall_infos_size;
+
+
+                //Check all the informations required to create the wall are present
+                if(
+                    wall_pos_x < 0 ||
+                    wall_pos_y < 0
+                )
+                    //Display error
+                    log_message(LOG_ERROR, "Unefficient informations to create a wall !");
+                else
+                    //Create the wall
+                    wall_create(wall_pos_x, wall_pos_y);
+            }
+
+            //Include array entries in i
+            i += array_entries;
+
+        }
+
+        //Unexcepted token
         else {
             log_message(LOG_ERROR, "A JSON key was not understood...");
         }
@@ -177,56 +318,4 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
 }
 
 
-/**
- * Check if a JSON key value correspond to a specified JSON key value
- *
- * @param const char *json_string The JSON string to use
- * @param jsmntok_t *tok The token to check
- * @param const char *key_value The value of the key
- * @return int 0 = The two keys are the same / -1 = The keys are different
- */
-int json_check_two_keys(const char *json_string, jsmntok_t *tok, const char *key_value){
-    return (
 
-        tok->type == JSMN_STRING && //Check token type
-        (int) strlen(key_value) == tok->end - tok->start && //Check string size
-        strncmp(json_string + tok->start, key_value, tok->end - tok->start) == 0 //Check string value
-
-    ) ? 0 : -1;
-}
-
-/**
- * Retrieve an integer of a JSON chain related to a specified key
- *
- * @param const char *json_string The source JSON string
- * @param jsmntok_t *tok The reference tokn
- * @return int -1 in case of failure / Specified number else
- */
-int json_extract_integer(const char *json_string, jsmntok_t *token){
-
-    //Declare variables
-    char *string = NULL;
-    int number = -1;
-
-    //Check the current key is a primitive integer
-    if(token->type != JSMN_PRIMITIVE)
-        return -1; //The operation can't succeed
-
-    //Allocate memory
-    string = malloc(((token->end)-(token->start)+1)*sizeof(char));
-
-    if(string == NULL)
-        fatal_error("Couldn't allocate memory for a string !");
-
-    //Extract the key value and convert it into an integer
-    strncpy(string, json_string + token->start, token->end - token->start);
-    string[token->end - token->start] = '\0'; //Make sure the string is ended correctly
-    number = atoi(string);
-
-    //Free memory
-    free(string);
-
-    //Return result
-    return number;
-
-}

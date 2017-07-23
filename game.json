@@ -2,5 +2,24 @@
 	"main_character":{
 		"pos_x": 5,
 		"pos_y": 5,
-	}
+	},
+
+	"walls": [
+		{
+			"pos_x": 0,
+			"pos_y": 0,
+		},
+		{
+			"pos_x": 1,
+			"pos_y": 1
+		},
+		{
+			"pos_x": 1,
+			"pos_y": 2,
+		},
+		{
+			"pos_x": 1,
+			"pos_y": 3,
+		}
+	]
 }
