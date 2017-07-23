@@ -62,6 +62,10 @@ void character_move(Character *character, int movement){
     //Log action (verbose)
     log_message(LOG_VERBOSE, "Move a character");
 
+    //Save old character position
+    character->old_pos_x = character->pos_x;
+    character->old_pos_y = character->pos_y;
+
     //Make the required movement
     switch(movement){
 

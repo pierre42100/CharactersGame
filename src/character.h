@@ -18,6 +18,10 @@ struct Character {
     int pos_x;
     int pos_y;
 
+    //Old position of the character
+    int old_pos_x;
+    int old_pos_y;
+
     //Character image
     SDL_Texture *texture;
 

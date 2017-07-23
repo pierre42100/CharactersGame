@@ -63,6 +63,9 @@ void game_started_stop(){
     //Destroy main character
     main_character_destroy();
 
+    //Destroy all the walls
+    wall_destroy_all();
+
     //Update game state
     game_update_state(GAME_STATE_MENU);
 

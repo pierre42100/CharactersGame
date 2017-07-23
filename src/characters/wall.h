@@ -33,6 +33,13 @@ typedef struct Wall {
 void wall_create(int x, int y);
 
 /**
+ * Destroy all the walls
+ *
+ * @return void
+ */
+void wall_destroy_all();
+
+/**
  * Display the walls
  *
  * @return void

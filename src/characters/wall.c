@@ -58,6 +58,36 @@ void wall_create(int x, int y){
     new_wall->character.pos_y = y;
 }
 
+/**
+ * Destroy all the walls
+ *
+ * @return void
+ */
+void wall_destroy_all(){
+
+    //Declare variables
+    Wall *curr_wall = NULL;
+
+    //Check if there isn't any wall to destroy
+    if(last_wall == NULL)
+        return; //Nothing to be done
+
+    //Else process each wall to delete them
+    curr_wall = last_wall;
+    while(last_wall != NULL){
+
+        //Save the next wall reference
+        last_wall = curr_wall->nextWall;
+
+        //Delete the current wall (free memory)
+        free(curr_wall);
+
+        curr_wall = last_wall;
+
+    }
+
+}
+
 
 /**
  * Display the walls

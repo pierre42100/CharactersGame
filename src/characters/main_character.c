@@ -13,6 +13,8 @@
 #include "../character.h"
 #include "main_character.h"
 
+#include "wall.h"
+
 static Character *main_character = NULL;
 
 /**
@@ -73,6 +75,9 @@ void main_character_display(){
 void main_character_move(int movement){
     //Move the character
     character_move(main_character, movement);
+
+    //Check if the new position of the character isn't on a wall
+
 }
 
 /**
