@@ -43,6 +43,10 @@ Character character_load(const char *filename, int target_texture){
     //Determine character coordinates
     SDL_QueryTexture(new_character.texture, NULL, NULL, &new_character.w, &new_character.h);
 
+    //Reduce character size to fit to grid standard
+    new_character.w = new_character.w / GAME_CELL_WIDTH;
+    new_character.h = new_character.h / GAME_CELL_HEIGHT;
+
     //Define default character speed
     new_character.speed = 1;
 
@@ -92,17 +96,17 @@ void character_move(Character *character, int movement){
     }
 
     //Check and correct if required the new coordinates of the character
-    if(character->pos_x < -(character->w/2))
-        character->pos_x = -(character->w/2);
+    if(character->pos_x < 0)
+        character->pos_x = 0;
 
-    if(character->pos_x > WINDOW_WIDTH-(character->w/2))
-        character->pos_x = WINDOW_WIDTH-(character->w/2);
+    if(character->pos_x > GAME_NB_CELL_X_AXIS)
+        character->pos_x = GAME_NB_CELL_X_AXIS;
 
-    if(character->pos_y < -(character->h/2))
-        character->pos_y = -(character->h/2);
+    if(character->pos_y < 0)
+        character->pos_y = 0;
 
-    if(character->pos_y > WINDOW_HEIGHT-(character->h/2))
-        character->pos_y = WINDOW_HEIGHT-(character->h/2);
+    if(character->pos_y > GAME_NB_CELL_Y_AXIS)
+        character->pos_y = GAME_NB_CELL_Y_AXIS;
 
 
     //End of function
