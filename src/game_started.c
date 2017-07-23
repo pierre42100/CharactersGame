@@ -10,12 +10,14 @@
 #include "config.h"
 #include "logging.h"
 #include "ui.h"
-#include "main_character.h"
+#include "characters/main_character.h"
 #include "character.h"
 #include "json.h"
 #include "game_started.h"
 #include "game_paused.h"
 #include "game.h"
+
+#include "characters/wall.h"
 
 /**
  * Start the game
@@ -34,6 +36,11 @@ void game_started_start(){
     //Parse JSON file
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
+
+    //Create a few walls
+    wall_create(50, 50);
+    wall_create(10, 100);
+    wall_create(200, 200);
 
     //Update game state
     game_update_state(GAME_STATE_STARTED);
@@ -130,4 +137,7 @@ void game_started_handle_events(SDL_Event *event){
 void game_started_refresh_window(){
     //Display the main character
     main_character_display();
+
+    //Display walls
+    wall_display_all();
 }

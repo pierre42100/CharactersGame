@@ -13,7 +13,7 @@
 #include "logging.h"
 #include "utils.h"
 #include "json.h"
-#include "main_character.h"
+#include "characters/main_character.h"
 
 /**
  * Parse game JSON file
@@ -220,6 +220,7 @@ int json_extract_integer(const char *json_string, jsmntok_t *token){
 
     //Extract the key value and convert it into an integer
     strncpy(string, json_string + token->start, token->end - token->start);
+    string[token->end - token->start] = '\0'; //Make sure the string is ended correctly
     number = atoi(string);
 
     //Free memory

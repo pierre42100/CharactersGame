@@ -4,10 +4,13 @@
  * @author Pierre HUBERT
  */
 
-#include "config.h"
-#include "ui.h"
-#include "logging.h"
-#include "character.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "../config.h"
+#include "../ui.h"
+#include "../logging.h"
+#include "../character.h"
 #include "main_character.h"
 
 static Character *main_character = NULL;

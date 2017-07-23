@@ -9,7 +9,7 @@
 #include "logging.h"
 #include "ui.h"
 #include "config.h"
-#include "main_character.h"
+#include "characters/main_character.h"
 #include "character.h"
 #include "game_menu.h"
 #include "game_started.h"

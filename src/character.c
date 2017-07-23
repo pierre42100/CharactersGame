@@ -29,7 +29,7 @@ Character character_load(const char *filename, int target_texture){
     //Load the character image (if it is not already available)
     if(new_character.texture == NULL){
         //Load image
-        ui_load_image_into_texture(RES_DIRECTORY"character.png", target_texture);
+        ui_load_image_into_texture(filename, target_texture);
 
         //Get the pointer on the new texture
         new_character.texture = ui_get_pointer_on_texture(target_texture);
