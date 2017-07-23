@@ -15,7 +15,14 @@
 
 //Game window
 #define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_HEIGHT 608
+
+//Game grid
+#define GAME_CELL_WIDTH 32
+#define GAME_CALL_HEIGHT 32
+
+#define GAME_NB_CELL_X_AXIS 25
+#define GAME_NB_CELL_Y_AXIS 19
 
 
 #endif // CONFIG_H_INCLUDED

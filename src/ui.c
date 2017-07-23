@@ -298,7 +298,7 @@ void character_display(Character *character){
     SDL_SetRenderTarget(renderer, NULL);
 
     //Prepare the application
-    SDL_Rect target_area = {character->pos_x, character->pos_y, character->w, character->h};
+    SDL_Rect target_area = {character->pos_x*GAME_CELL_WIDTH, character->pos_y*GAME_CALL_HEIGHT, character->w, character->h};
 
     //Apply character
     SDL_RenderCopy(renderer, character->texture, NULL, &target_area);

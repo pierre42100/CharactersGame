@@ -116,3 +116,36 @@ void wall_display_all(){
 
     }
 }
+
+/**
+ * Check if a character is on a wall or not
+ *
+ * @param Character *character The character to check
+ * @return int 1 = Yes, the character is on a wall / 0 = No, the character isn't on a wall
+ */
+int wall_check_character_presence(Character *character){
+
+    //Declare variables
+    Wall *curr_wall = NULL;
+
+    //Check if at least one character exists before
+    if(last_wall == NULL)
+        return 0; //There isn't any wall
+
+    //Process all the walls
+    curr_wall = last_wall;
+    while(curr_wall != NULL){
+
+        //Check wall
+        if(character_check_collision(character, &curr_wall->character) != 0)
+            return 1; //There is a collision
+
+        //Get the next wall memory address
+        curr_wall = curr_wall->nextWall;
+
+    }
+
+    //If we get there, there isn't any collision
+    return 0;
+
+}

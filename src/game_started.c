@@ -38,9 +38,10 @@ void game_started_start(){
     json_parse_game_file(json_file);
 
     //Create a few walls
-    wall_create(50, 50);
-    wall_create(10, 100);
-    wall_create(200, 200);
+    wall_create(1, 1);
+    wall_create(1, 2);
+    wall_create(1, 3);
+    wall_create(1, 4);
 
     //Update game state
     game_update_state(GAME_STATE_STARTED);

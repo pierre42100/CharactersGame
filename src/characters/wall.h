@@ -46,4 +46,12 @@ void wall_destroy_all();
  */
 void wall_display_all();
 
+/**
+ * Check if a character is on a wall or not
+ *
+ * @param Character *character The character to check
+ * @return int 1 = Yes, the character is on a wall / 0 = No, the character isn't on a wall
+ */
+int wall_check_character_presence(Character *character);
+
 #endif // WALL_H_INCLUDED

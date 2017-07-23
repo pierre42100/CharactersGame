@@ -121,3 +121,20 @@ void character_destroy(Character *character){
     free(character);
 
 }
+
+/**
+ * Check for a collision between two characters
+ *
+ * @param Character *character_1 The first character
+ * @param Character *character_2 The second character
+ * @return int 1 = There is a collison / 0 = There isn't any collision
+ */
+int character_check_collision(Character *character_1, Character *character_2){
+
+    //Create rectangles with coordinates of the two characters
+    SDL_Rect rect1 = {character_1->pos_x, character_1->pos_y, character_1->w, character_1->h};
+    SDL_Rect rect2 = {character_2->pos_x, character_2->pos_y, character_2->w, character_2->h};
+
+    //Check if the two rectangles have common points or not
+    return (SDL_HasIntersection(&rect1, &rect2) == SDL_TRUE) ? 1 : 0;
+}

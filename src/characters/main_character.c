@@ -39,7 +39,7 @@ void main_character_create(){
     main_character->pos_y = (WINDOW_HEIGHT-main_character->h)/2;
 
     //Increase character speed
-    main_character->speed = 10;
+    main_character->speed = 1;
 
     //End of function
     return;
@@ -77,6 +77,10 @@ void main_character_move(int movement){
     character_move(main_character, movement);
 
     //Check if the new position of the character isn't on a wall
+    if(wall_check_character_presence(main_character) == 1){
+        //Put the character on its old positions
+        main_character_set_location(main_character->old_pos_x, main_character->old_pos_y);
+    }
 
 }
 

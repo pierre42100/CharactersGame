@@ -68,4 +68,13 @@ void character_move(Character *character, int movement);
  */
 void character_destroy(Character *character);
 
+/**
+ * Check for a collision between two characters
+ *
+ * @param Character *character_1 The first character
+ * @param Character *character_2 The second character
+ * @return int 1 = There is a collison / 0 = There isn't any collision
+ */
+int character_check_collision(Character *character_1, Character *character_2);
+
 #endif // CHARACTER_H_INCLUDED
