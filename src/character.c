@@ -99,14 +99,14 @@ void character_move(Character *character, int movement){
     if(character->pos_x < 0)
         character->pos_x = 0;
 
-    if(character->pos_x > GAME_NB_CELL_X_AXIS)
-        character->pos_x = GAME_NB_CELL_X_AXIS;
+    if(character->pos_x > GAME_NB_CELL_X_AXIS-1)
+        character->pos_x = GAME_NB_CELL_X_AXIS-1;
 
     if(character->pos_y < 0)
         character->pos_y = 0;
 
-    if(character->pos_y > GAME_NB_CELL_Y_AXIS)
-        character->pos_y = GAME_NB_CELL_Y_AXIS;
+    if(character->pos_y > GAME_NB_CELL_Y_AXIS-1)
+        character->pos_y = GAME_NB_CELL_Y_AXIS-1;
 
 
     //End of function

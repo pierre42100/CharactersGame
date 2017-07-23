@@ -35,8 +35,8 @@ void main_character_create(){
     *main_character = character_load(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
 
     //Place the character on the center of the screen
-    main_character->pos_x = (WINDOW_WIDTH-main_character->w)/2;
-    main_character->pos_y = (WINDOW_HEIGHT-main_character->h)/2;
+    main_character->pos_x = (GAME_NB_CELL_X_AXIS)/2;
+    main_character->pos_y = (GAME_NB_CELL_Y_AXIS)/2;
 
     //Increase character speed
     main_character->speed = 1;
@@ -80,6 +80,9 @@ void main_character_move(int movement){
     if(wall_check_character_presence(main_character) == 1){
         //Put the character on its old positions
         main_character_set_location(main_character->old_pos_x, main_character->old_pos_y);
+
+        //Log message
+        log_message(LOG_VERBOSE, "New main character position denied: character can't walk on walls !");
     }
 
 }
