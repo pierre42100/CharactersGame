@@ -275,10 +275,8 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
 
                     //Unexcepted error
                     else {
-                        char errorMessage[100];
-                        sprintf(errorMessage, "Parse error : walls->array_element->property_name : Unrecognised value '%.*s' !",
-                         tokens[count].end - tokens[count].start, json_string + tokens[count].start);
-                        log_message(LOG_ERROR, errorMessage);
+                        log_message(LOG_ERROR, "Parse error : walls->array_element->property_name : Unrecognised value !");
+                        continue;
                     }
 
                     //Increment counter by one
