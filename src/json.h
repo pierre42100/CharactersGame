@@ -37,4 +37,13 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
  */
 int json_check_two_keys(const char *json_string, jsmntok_t *tok, const char *key_value);
 
+/**
+ * Retrieve an integer of a JSON chain related to a specified key
+ *
+ * @param const char *json_string The source JSON string
+ * @param jsmntok_t *tok The reference tokn
+ * @return int -1 in case of failure / Specified number else
+ */
+int json_extract_integer(const char *json_string, jsmntok_t *token);
+
 #endif // JSON_H_INCLUDED
