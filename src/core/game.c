@@ -16,6 +16,7 @@
 #include "game_menu.h"
 #include "game_started.h"
 #include "game_paused.h"
+#include "game_over.h"
 #include "game.h"
 
 //This variables defines if the application has to be left or not
@@ -129,6 +130,11 @@ void game_handle_event(SDL_Event *event){
         case GAME_STATE_PAUSED:
             game_paused_handle_events(event);
         break;
+
+        //The game is over
+        case GAME_STATE_OVER:
+            game_over_handles_events(event);
+        break;
     }
 
 }
@@ -167,6 +173,11 @@ void game_refresh_screen(){
         case GAME_STATE_PAUSED:
             game_paused_display();
         break;
+
+        //The game is over
+        case GAME_STATE_OVER:
+            game_over_display();
+        break;
     }
 
     //Refresh the screen
@@ -201,6 +212,8 @@ void *game_routine_thread_function(void *param){
 
             //Log action
             log_message(LOG_VERBOSE, "Perform game routine");
+
+            //Call game routine (not implemented yet)
 
         }
 

@@ -32,6 +32,10 @@ struct Character {
     //Character speed
     int speed;
 
+    //Character lives
+    int max_lives;
+    int lives;
+
 };
 typedef struct Character Character;
 

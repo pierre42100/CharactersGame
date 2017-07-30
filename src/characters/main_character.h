@@ -7,7 +7,6 @@
  * @author Pierre HUBERT
  */
 
-
 /**
  * Create the main character
  */

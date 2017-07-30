@@ -50,6 +50,10 @@ Character character_load(const char *filename, int target_texture){
     //Define default character speed
     new_character.speed = 1;
 
+    //Define character number of lives
+    new_character.max_lives = 3;
+    new_character.lives = new_character.max_lives;
+
     //Return newly created character
     return new_character;
 }

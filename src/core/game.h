@@ -15,6 +15,7 @@
 #define GAME_STATE_MENU 0
 #define GAME_STATE_STARTED 1
 #define GAME_STATE_PAUSED 2
+#define GAME_STATE_OVER 3
 
 
 /**
