@@ -28,7 +28,7 @@ static int need_window_refresh = 1;
 static int game_state = GAME_STATE_MENU;
 
 //Game threads
-static pthread_t game_ui_thread;
+static pthread_t game_routine_thread;
 
 /**
  * Initializate game
@@ -45,8 +45,8 @@ void game_init(){
     ui_load_background();
 
     //Create event catcher thread
-    if(pthread_create(&game_ui_thread, NULL, game_ui_thread_function, NULL))
-        fatal_error("Couldn't create UI thread !");
+    if(pthread_create(&game_routine_thread, NULL, game_routine_thread_function, NULL))
+        fatal_error("Couldn't create routine thread !");
 }
 
 
@@ -67,7 +67,7 @@ void game_loop(){
     //Perpetual loop
     while(1==1){
         //Wait for an event
-        SDL_WaitEvent(&event);
+        SDL_WaitEventTimeout(&event, MAX_PAUSE_BETWEEN_SCREEN_REFRESH*1000);
 
         //Handle event
         game_handle_event(&event);
@@ -184,14 +184,31 @@ void game_update_state(int new_state){
 }
 
 /**
- * Game UI refresh thread
+ * Game routine thread
  *
  * @param *void Nothing
  */
-void *game_ui_thread_function(void *param){
+void *game_routine_thread_function(void *param){
 
     //Avoid errors
     (void) param;
+
+    //Perform a loop
+    while(1 == 1){
+
+        //Routines are performed only if the game is started
+        if(game_state == GAME_STATE_STARTED){
+
+            //Log action
+            log_message(LOG_VERBOSE, "Perform game routine");
+
+        }
+
+        //Make a pause
+        usleep(PAUSE_BETWEEN_GAME_ROUTINES * 1000000);
+
+    }
+
 
     //Close thread
     pthread_exit(EXIT_SUCCESS);

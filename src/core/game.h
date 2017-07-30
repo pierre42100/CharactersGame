@@ -59,11 +59,11 @@ void game_refresh_screen();
 void game_handle_event(SDL_Event *event);
 
 /**
- * Game UI thread function
+ * Game routine thread function
  *
  * @param *void Nothing
  */
-void *game_ui_thread_function(void *param);
+void *game_routine_thread_function(void *param);
 
 
 #endif // GAME_H_INCLUDED

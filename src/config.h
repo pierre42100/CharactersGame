@@ -24,8 +24,8 @@
 #define GAME_NB_CELL_X_AXIS 25
 #define GAME_NB_CELL_Y_AXIS 19
 
-//Pause between two screen refresh
-#define PAUSE_BETWEEN_SCREEN_REFRESH 0.5
-
+//Pause between two games routines execution
+#define PAUSE_BETWEEN_GAME_ROUTINES 0.5
+#define MAX_PAUSE_BETWEEN_SCREEN_REFRESH 2
 
 #endif // CONFIG_H_INCLUDED
