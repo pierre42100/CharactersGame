@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "config.h"
+#include "../config.h"
 #include "logging.h"
 #include "character.h"
 #include "ui.h"

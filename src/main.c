@@ -10,9 +10,9 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "ui.h"
-#include "game.h"
-#include "logging.h"
+#include "core/ui.h"
+#include "core/game.h"
+#include "core/logging.h"
 
 /**
  * Main function of the programm

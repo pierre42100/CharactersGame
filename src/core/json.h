@@ -7,7 +7,7 @@
  * @author Pierre HUBERT
  */
 
-#include "lib/jsmn/jsmn.h"
+#include "../lib/jsmn/jsmn.h"
 
 /**
  * Parse game JSON file

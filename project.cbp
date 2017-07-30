@@ -38,10 +38,6 @@
 		<Linker>
 			<Add option="`sdl2-config --libs`" />
 		</Linker>
-		<Unit filename="src/character.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/character.h" />
 		<Unit filename="src/characters/main_character.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -51,45 +47,49 @@
 		</Unit>
 		<Unit filename="src/characters/wall.h" />
 		<Unit filename="src/config.h" />
-		<Unit filename="src/game.c">
+		<Unit filename="src/core/character.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/game.h" />
-		<Unit filename="src/game_menu.c">
+		<Unit filename="src/core/character.h" />
+		<Unit filename="src/core/game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/game_menu.h" />
-		<Unit filename="src/game_paused.c">
+		<Unit filename="src/core/game.h" />
+		<Unit filename="src/core/game_menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/game_paused.h" />
-		<Unit filename="src/game_started.c">
+		<Unit filename="src/core/game_menu.h" />
+		<Unit filename="src/core/game_paused.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/game_started.h" />
-		<Unit filename="src/json.c">
+		<Unit filename="src/core/game_paused.h" />
+		<Unit filename="src/core/game_started.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/json.h" />
+		<Unit filename="src/core/game_started.h" />
+		<Unit filename="src/core/json.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/json.h" />
+		<Unit filename="src/core/logging.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/logging.h" />
+		<Unit filename="src/core/ui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/ui.h" />
+		<Unit filename="src/core/utils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/utils.h" />
 		<Unit filename="src/lib/jsmn/jsmn.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/lib/jsmn/jsmn.h" />
-		<Unit filename="src/logging.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/logging.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/ui.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui.h" />
-		<Unit filename="src/utils.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/utils.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

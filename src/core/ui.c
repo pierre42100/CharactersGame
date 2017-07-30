@@ -10,7 +10,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "logging.h"
-#include "config.h"
+#include "../config.h"
 #include "ui.h"
 
 /**

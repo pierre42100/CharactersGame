@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lib/jsmn/jsmn.h"
+#include "../lib/jsmn/jsmn.h"
 
 #include "logging.h"
 #include "utils.h"
 #include "json.h"
 
-#include "characters/main_character.h"
-#include "characters/wall.h"
+#include "../characters/main_character.h"
+#include "../characters/wall.h"
 
 
 /**

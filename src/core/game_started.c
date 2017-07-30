@@ -7,17 +7,17 @@
 #include <SDL2/SDL.h>
 #include <string.h>
 
-#include "config.h"
+#include "../config.h"
 #include "logging.h"
 #include "ui.h"
-#include "characters/main_character.h"
+#include "../characters/main_character.h"
 #include "character.h"
 #include "json.h"
 #include "game_started.h"
 #include "game_paused.h"
 #include "game.h"
 
-#include "characters/wall.h"
+#include "../characters/wall.h"
 
 /**
  * Start the game

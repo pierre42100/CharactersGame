@@ -4,7 +4,7 @@
  * @author Pierre HUBERT
  */
 
-#include "config.h"
+#include "../config.h"
 #include "logging.h"
 #include "game.h"
 #include "game_started.h"

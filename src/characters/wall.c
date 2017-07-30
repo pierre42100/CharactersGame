@@ -8,9 +8,9 @@
 #include <stdlib.h>
 
 #include "../config.h"
-#include "../logging.h"
-#include "../character.h"
-#include "../ui.h"
+#include "../core/logging.h"
+#include "../core/character.h"
+#include "../core/ui.h"
 #include "wall.h"
 
 /**

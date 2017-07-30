@@ -7,7 +7,7 @@
  * @author Pierre HUBERT
  */
 
-#include "../character.h"
+#include "../core/character.h"
 
 /**
  * Defines wall object
