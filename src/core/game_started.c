@@ -6,6 +6,8 @@
 
 #include <SDL2/SDL.h>
 #include <string.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #include "../config.h"
 #include "logging.h"
@@ -19,6 +21,7 @@
 
 #include "../characters/wall.h"
 
+
 /**
  * Start the game
  */
@@ -29,6 +32,7 @@ void game_started_start(){
 
     //Refresh screen
     ui_refresh_window();
+    log_message(LOG_ERROR, "Pause");
 
     //Load main character
     main_character_create();

@@ -5,6 +5,8 @@
  */
 
 #include <SDL2/SDL.h>
+#include <unistd.h>
+#include <pthread.h>
 
 #include "logging.h"
 #include "ui.h"
@@ -25,6 +27,9 @@ static int need_window_refresh = 1;
 //This variable knows if the games has started or not
 static int game_state = GAME_STATE_MENU;
 
+//Game threads
+static pthread_t game_ui_thread;
+
 /**
  * Initializate game
  */
@@ -38,6 +43,10 @@ void game_init(){
 
     //Load the background
     ui_load_background();
+
+    //Create event catcher thread
+    if(pthread_create(&game_ui_thread, NULL, game_ui_thread_function, NULL))
+        fatal_error("Couldn't create UI thread !");
 }
 
 
@@ -172,4 +181,19 @@ void game_refresh_screen(){
  */
 void game_update_state(int new_state){
     game_state = new_state;
+}
+
+/**
+ * Game UI refresh thread
+ *
+ * @param *void Nothing
+ */
+void *game_ui_thread_function(void *param){
+
+    //Avoid errors
+    (void) param;
+
+    //Close thread
+    pthread_exit(EXIT_SUCCESS);
+
 }
