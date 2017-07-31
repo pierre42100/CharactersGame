@@ -29,7 +29,7 @@ void game_started_start(){
     ui_utils_display_loading_message();
 
     //Refresh screen
-    ui_refresh_window();
+    ui_refresh_window();getchar();
 
     //Load main character
     main_character_create();

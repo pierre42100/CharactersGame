@@ -10,6 +10,7 @@
 #include "logging.h"
 #include "character.h"
 #include "ui.h"
+#include "ui_fonts.h"
 #include "ui_utils.h"
 
 extern SDL_Renderer *renderer;
