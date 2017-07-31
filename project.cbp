@@ -17,6 +17,7 @@
 				<Linker>
 					<Add library="/usr/lib/x86_64-linux-gnu/libSDL2_image.so" />
 					<Add library="/usr/lib/x86_64-linux-gnu/libpthread.so" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libSDL2_ttf-2.0.so" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -60,6 +61,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/core/game_menu.h" />
+		<Unit filename="src/core/game_over.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/game_over.h" />
 		<Unit filename="src/core/game_paused.c">
 			<Option compilerVar="CC" />
 		</Unit>

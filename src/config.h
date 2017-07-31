@@ -13,6 +13,10 @@
 //Ressources directory
 #define RES_DIRECTORY "res/"
 
+//Main font
+#define FONT_FILE "res/UbuntuMono-B.ttf"
+#define FONT_PTSIZE 66 //Size of the font to load
+
 //Game window
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
