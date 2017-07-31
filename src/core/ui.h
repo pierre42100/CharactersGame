@@ -101,17 +101,8 @@ void ui_load_background();
 void ui_display_background();
 
 /**
- * Display UI loading message
+ * Color functions
  */
-void ui_display_loading_message();
-
-/**
- * Display a character
- *
- * @param Character character The character to display
- * @return void (Fatal error in case of failure)
- */
-void character_display(Character *character);
 
 /**
  * Colors definition
@@ -125,6 +116,11 @@ void character_display(Character *character);
  * @return SDL_Color The required color
  */
 SDL_Color ui_get_color(int color);
+
+
+/**
+ * Font functions
+ */
 
 /**
  * Font styles definition

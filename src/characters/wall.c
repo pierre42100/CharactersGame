@@ -11,6 +11,7 @@
 #include "../core/logging.h"
 #include "../core/character.h"
 #include "../core/ui.h"
+#include "../core/ui_utils.h"
 #include "wall.h"
 
 /**

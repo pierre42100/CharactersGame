@@ -9,6 +9,7 @@
 
 #include "../config.h"
 #include "../core/ui.h"
+#include "../core/ui_utils.h"
 #include "../core/logging.h"
 #include "../core/character.h"
 #include "main_character.h"

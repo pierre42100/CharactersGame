@@ -10,6 +10,7 @@
 #include "../config.h"
 #include "logging.h"
 #include "ui.h"
+#include "ui_utils.h"
 #include "../characters/main_character.h"
 #include "character.h"
 #include "json.h"
@@ -25,10 +26,10 @@
 void game_started_start(){
 
     //Display loading message
-    ui_display_loading_message();
+    ui_utils_display_loading_message();
 
     //Refresh screen
-    ui_refresh_window();getchar();
+    ui_refresh_window();
 
     //Load main character
     main_character_create();
