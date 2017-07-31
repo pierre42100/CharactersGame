@@ -21,6 +21,9 @@ extern SDL_Texture *textures[NUMBER_TEXTURES];
  */
 void ui_utils_display_loading_message(){
 
+    //Declare variables
+    UI_Text loading_msg;
+
     //Verbose message
     log_message(LOG_VERBOSE, "Display a loading message on the screen");
 
@@ -33,21 +36,25 @@ void ui_utils_display_loading_message(){
         //Create the texture
         ui_create_texture(TEXTURE_LOADING_MSG, WINDOW_WIDTH, WINDOW_HEIGHT, 1);
 
-        //Prepare text rendering
-        char message[] = "Loading, please wait...";
-        int message_style = FONT_STYLE_NORMAL;
-        int message_rendering = FONT_RENDERING_SOLID;
-        int message_height = 30;
-        int message_width = 0;
+        //Create message object
+        loading_msg = ui_font_create_variable("Loading, please wait...", 32);
 
-        //Compute given informations
-        ui_font_determine_text_size(message, message_style, &message_width, message_height);
+        //Define target texture
+        ui_font_set_target_texture(&loading_msg, textures[TEXTURE_LOADING_MSG]);
 
-        //Determine message coordinates
-        int message_x = (WINDOW_WIDTH-message_width)/2;
-        int message_y = (WINDOW_HEIGHT-message_height)/2;
-        //Write a text on the picture
-        ui_font_write_texture(textures[TEXTURE_LOADING_MSG], message, ui_get_color(UI_COLOR_WHITE), message_x, message_y, message_height, message_style, message_rendering);
+        //Update style
+        ui_font_set_style(&loading_msg, FONT_STYLE_ITALIC);
+
+
+        //Center message on the screen
+        ui_font_set_coordinates(
+            &loading_msg,
+            (WINDOW_WIDTH-loading_msg.text_width)/2,
+            (WINDOW_HEIGHT-loading_msg.text_height)/2
+        );
+
+        //Write message
+        ui_font_write_texture(&loading_msg);
 
     }
 

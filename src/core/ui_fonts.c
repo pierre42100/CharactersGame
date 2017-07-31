@@ -56,47 +56,67 @@ void ui_font_quit(){
 }
 
 /**
- * Write a text on a texture at a specified position
+ * Create a text variable
  *
- * @param SDL_Texture *target_texture Target texture (NULL to specify renderer)
- * @param const char *message The message to write on the renderer
- * @param SDL_Color *color The color of the text to write
- * @param int x
- * @param int y > Coordinates of the text
- * @param int required_text_height The height of the text
- * @param int style The style of the text
- * @param int render_mode The mode to use to render text
+ * @param const char *message The message of the object
+ * @param int height The height of the newly created message
+ * @return UI_Text Created write object with default options
  */
-void ui_font_write_texture(SDL_Texture *target_texture, const char *message, SDL_Color color, int x, int y, int required_text_height, int style, int render_mode){
+UI_Text ui_font_create_variable(char *message, int height){
+    //Declare variables
+    UI_Text data;
+
+    //Set message content & height
+    data.message = message;
+    data.text_height = height;
+
+    //Setting default values
+    data.style = FONT_STYLE_NORMAL;
+    data.render_mode = FONT_RENDERING_SOLID;
+    data.color = ui_get_color(UI_COLOR_WHITE);
+
+    //Compute message size
+    ui_font_determine_text_size(&data);
+
+    //Return result
+    return data;
+}
+
+/**
+ * Write a text object on a texture
+ *
+ * @param UI_Text *data Informations about the text object
+ */
+void ui_font_write_texture(UI_Text *data){
 
     //Declare variables
     SDL_Surface *text_surface = NULL;
-    SDL_Texture *text_texture = NULL;
-    int text_width = 0;
-    int text_height = 0;
+    SDL_Texture *temp_text_texture = NULL;
+    int temp_texture_width = 0;
+    int temp_texture_height = 0;
 
     //Log action
     log_message(LOG_VERBOSE, "Writing a message on a texture");
 
     //Prepare rendering
-    ui_font_prepare_rendering(style);
+    ui_font_prepare_rendering(data->style);
 
     //Create a surface containing the text accordingly to the rendering mode
-    switch (render_mode){
+    switch (data->render_mode){
 
         //Solid rendering : fatest, but poorest quality
         case FONT_RENDERING_SOLID:
-            text_surface = TTF_RenderText_Solid(main_font, message, color);
+            text_surface = TTF_RenderText_Solid(main_font, data->message, data->color);
         break;
 
         //Shaded rendering : intermediate, better quality, but no transparency support
         case FONT_RENDERING_SHADED:
-            text_surface = TTF_RenderText_Shaded(main_font, message, color, ui_get_color(UI_COLOR_WHITE));
+            text_surface = TTF_RenderText_Shaded(main_font, data->message, data->color, data->bgcolor);
         break;
 
         //Blended rendering : slowlest, but with transparency support + better quality
         case FONT_RENDERING_BLENDED:
-            text_surface = TTF_RenderText_Blended(main_font, message, color);
+            text_surface = TTF_RenderText_Blended(main_font, data->message, data->color);
         break;
 
         default:
@@ -109,29 +129,29 @@ void ui_font_write_texture(SDL_Texture *target_texture, const char *message, SDL
         fatal_error("Couldn't render message !");
 
     //Convert the surface into a texture
-    text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
+    temp_text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
     //Check for errors
-    if(text_texture == NULL)
+    if(temp_text_texture == NULL)
         fatal_error("TTF function : Couldn't convert a surface containing a text message into a texture !");
 
     //Determine texture target area
-    if(SDL_QueryTexture(text_texture, NULL, NULL, &text_width, &text_height) != 0)
+    if(SDL_QueryTexture(temp_text_texture, NULL, NULL, &temp_texture_width, &temp_texture_height) != 0)
         fatal_error("TTF function : Couldn't query newly created texture !");
-    SDL_Rect target_area = {x, y, text_width*((float)required_text_height/text_height), required_text_height};
+    SDL_Rect target_area = {data->x, data->y, data->text_width, data->text_height};
 
     //Set the texture as the rendering target
-    SDL_SetRenderTarget(renderer, target_texture);
+    SDL_SetRenderTarget(renderer, data->targetTexture);
 
     //Copy the text
-    SDL_RenderCopy(renderer, text_texture, NULL, &target_area);
+    SDL_RenderCopy(renderer, temp_text_texture, NULL, &target_area);
 
     //Make the renderer as the new target
     SDL_SetRenderTarget(renderer, NULL);
 
     //Free memory
     SDL_FreeSurface(text_surface);
-    SDL_DestroyTexture(text_texture);
+    SDL_DestroyTexture(temp_text_texture);
 }
 
 /**
@@ -178,23 +198,94 @@ void ui_font_prepare_rendering(int style){
 /**
  * Determine the room taken by a text before rendering it
  *
- * @param const char *message The message to calculate
- * @param int style The style of the text
- * @param int *width The width of the text (target pointer)
- * @param int required_height The height of the text
+ * @param UI_Text *data Informations about the text object
  */
-void ui_font_determine_text_size(const char *message, int style, int *width, int required_height){
+void ui_font_determine_text_size(UI_Text *data){
 
     //Declare variable
     int rendered_height = 0;
+    int rendered_width = 0;
 
     //Define TTF options
-    ui_font_prepare_rendering(style);
+    ui_font_prepare_rendering(data->style);
 
     //Get the potential size of the text
-    TTF_SizeText(main_font, message, width, &rendered_height);
+    TTF_SizeText(main_font, data->message, &rendered_width, &rendered_height);
 
     //Compute new text width
-    *width = (int) (*width)*((float)required_height/rendered_height);
+    data->text_width = (int) rendered_width*((float)data->text_height/rendered_height);
+
+}
+
+
+/**
+ * Update the font style of a message structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int new_style The new style to use
+ */
+void ui_font_set_style(UI_Text *data, int new_style){
+
+    //Set the new style
+    data->style = new_style;
+
+    //Compute again text size
+    ui_font_determine_text_size(data);
+
+}
+
+/**
+ * Set the target texture of a message structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param SDL_Texture *texture The target texture of the message (NULL = Renderer)
+ */
+void ui_font_set_target_texture(UI_Text *data, SDL_Texture *texture){
+
+    //Set the new target texture
+    data->targetTexture = texture;
+
+}
+
+/**
+ * Set the coordinates where a message structure should be applied
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int x
+ * @param int y > Coordinates of the texture
+ */
+void ui_font_set_coordinates(UI_Text *data, int x, int y){
+
+    //Update coordinates
+    data->x = x;
+    data->y = y;
+
+}
+
+/**
+ * Set a new message to a text structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param char *message The new message
+ */
+void ui_font_set_message(UI_Text *data, char *message){
+
+    //Set new message
+    data->message = message;
+
+    //Recompute text width
+    ui_font_determine_text_size(data);
+
+}
+
+/**
+ * Set new message rendering mode
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int renderer The rendering option
+ */
+void ui_font_set_rendering_mode(UI_Text *data, int rendering_mode){
+
+    data->render_mode = rendering_mode;
 
 }

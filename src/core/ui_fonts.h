@@ -23,6 +23,32 @@
 #define FONT_RENDERING_SHADED 1
 #define FONT_RENDERING_BLENDED 2
 
+/**
+ * UI_Text object definition
+ */
+typedef struct UI_Text {
+
+    //Message of the text
+    char *message;
+
+    //Target texture
+    SDL_Texture *targetTexture;
+
+    //Position on the texture
+    int x;
+    int y;
+
+    //Text size & style
+    int text_height;
+    int text_width;
+    int style;
+    SDL_Color color;
+    SDL_Color bgcolor; //Useful only if rendering mode is set to shaded
+
+    //Rendering mode
+    int render_mode;
+
+} UI_Text;
 
 /**
  * Initializate font library & open main programm font
@@ -38,18 +64,20 @@ void ui_font_init(const char *filename, int ptsize);
 void ui_font_quit();
 
 /**
- * Write a text on a texture at a specified position
+ * Create a text variable
  *
- * @param SDL_Texture *target_texture Target texture (NULL to specify renderer)
- * @param const char *message The message to write on the renderer
- * @param SDL_Color *color The color of the text to write
- * @param int x
- * @param int y > Coordinates of the text
- * @param int required_text_height The height of the text
- * @param int style The style of the text
- * @param int render_mode The mode to use to render text
+ * @param const char *message The message of the object
+ * @param int height The height of the newly created message
+ * @return UI_Text Created write object with default options
  */
-void ui_font_write_texture(SDL_Texture *target_texture, const char *message, SDL_Color color, int x, int y, int required_text_height, int style, int render_mode);
+UI_Text ui_font_create_variable(char *message, int height);
+
+/**
+ * Write a text object on a texture
+ *
+ * @param UI_Text *data Informations about the text object
+ */
+void ui_font_write_texture(UI_Text *data);
 
 /**
  * Prepare text rendering
@@ -61,10 +89,49 @@ void ui_font_prepare_rendering(int style);
 /**
  * Determine the room taken by a text before rendering it
  *
- * @param const char *message The message to calculate
- * @param int style The style of the text
- * @param int *width The width of the text (target pointer)
- * @param int required_height The height of the text
+ * @param UI_Text *data Informations about the text object
  */
-void ui_font_determine_text_size(const char *message, int style, int *width, int required_height);
+void ui_font_determine_text_size(UI_Text *data);
+
+/**
+ * Update the font style of a message structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int new_style The new style to use
+ */
+void ui_font_set_style(UI_Text *data, int new_style);
+
+/**
+ * Set the target texture of a message structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param SDL_Texture *texture The target texture of the message (NULL = Renderer)
+ */
+void ui_font_set_target_texture(UI_Text *data, SDL_Texture *texture);
+
+/**
+ * Set the coordinates where a message structure should be applied
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int x
+ * @param int y > Coordinates of the texture
+ */
+void ui_font_set_coordinates(UI_Text *data, int x, int y);
+
+/**
+ * Set a new message to a text structure
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param char *message The new message
+ */
+void ui_font_set_message(UI_Text *data, char *message);
+
+/**
+ * Set new message rendering mode
+ *
+ * @param UI_Text *data Informations about the text object to update
+ * @param int renderer The rendering option
+ */
+void ui_font_set_rendering_mode(UI_Text *data, int rendering_mode);
+
 #endif // UI_FONTS_H_INCLUDED
