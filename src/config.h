@@ -15,7 +15,7 @@
 
 //Main font
 #define FONT_FILE "res/UbuntuMono-B.ttf"
-#define FONT_PTSIZE 66 //Size of the font to load
+#define FONT_PTSIZE 34 //Size of the font to load
 
 //Game window
 #define WINDOW_WIDTH 800

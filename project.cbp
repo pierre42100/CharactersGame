@@ -85,6 +85,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/core/ui.h" />
+		<Unit filename="src/core/ui_fonts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/ui_fonts.h" />
 		<Unit filename="src/core/ui_utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
