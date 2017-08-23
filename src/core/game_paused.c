@@ -65,7 +65,7 @@ void game_paused_display(){
 
         //Add menu options
         menu_add_option(menu, "Resume game", 1);
-        menu_add_option(menu, "Quit game", 2);
+        menu_add_option(menu, "Stop game", 2);
 
     }
 

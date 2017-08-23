@@ -16,16 +16,23 @@
 /**
  * Textures definition
  */
-#define NUMBER_TEXTURES 8
+#define NUMBER_TEXTURES 11
+
+//Included images
 #define TEXTURE_GRASS 0
+#define TEXTURE_MAIN_CHARACTER 3
+#define TEXTURE_WALL 6
+#define TEXTURE_STAR 8
+#define TEXTURE_HEART 10
+
+//Generated textures
 #define TEXTURE_BACKGROUND 1
 #define TEXTURE_LOADING_MSG 2
-#define TEXTURE_MAIN_CHARACTER 3
 #define TEXTURE_MAIN_MENU 4
 #define TEXTURE_PAUSED_MENU 5
-#define TEXTURE_WALL 6
 #define TEXTURE_GAME_OVER 7
-#define TEXTURE_STAR 8
+#define TEXTURE_LIFES_MESSAGE 9
+
 
 /**
  * Initializate the SDL library plus create programm windows & renderer

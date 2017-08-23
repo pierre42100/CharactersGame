@@ -116,3 +116,13 @@ void main_character_set_pos_x(int x){
 void main_character_set_pos_y(int y){
     main_character->pos_y = y;
 }
+
+
+/**
+ * Get the number of lives of the main character
+ *
+ * @return int The number of lives of the main character
+ */
+int main_character_get_lives(){
+    return main_character->lives;
+}

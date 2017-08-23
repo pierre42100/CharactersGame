@@ -9,6 +9,7 @@
 #include "../config.h"
 #include "logging.h"
 #include "character.h"
+#include "../characters/main_character.h"
 #include "ui.h"
 #include "ui_fonts.h"
 #include "ui_utils.h"
@@ -100,5 +101,66 @@ void character_display(Character *character){
 
     //Apply character
     SDL_RenderCopy(renderer, character->texture, NULL, &target_area);
+
+}
+
+/**
+ * Display the number of lives of the main character
+ *
+ * @return void
+ */
+void ui_utils_display_lives(){
+    //Log message
+    log_message(LOG_VERBOSE, "Display the number of lives of the character");
+
+    //Get the number of lives of the main character
+    int number_lives = main_character_get_lives();
+
+    //Check if a texture for the number of lifes message already exist or not
+    if(ui_is_texture_loaded(TEXTURE_LIFES_MESSAGE) != 1){
+
+        //Create text message
+        UI_Text lifes_msg = ui_font_create_variable("Lifes ", 14);
+        ui_font_set_style(&lifes_msg, FONT_STYLE_BOLD);
+        ui_font_set_coordinates(&lifes_msg, 0, 0);
+
+        //Create the texture
+        ui_create_texture(TEXTURE_LIFES_MESSAGE, lifes_msg.text_width, lifes_msg.text_height, 1);
+
+        //Apply the message to the texture
+        ui_font_set_target_texture(&lifes_msg, ui_get_pointer_on_texture(TEXTURE_LIFES_MESSAGE));
+        ui_font_write_texture(&lifes_msg);
+
+    }
+
+    //Prepare rendering
+    SDL_SetRenderTarget(renderer, NULL);
+
+    //Apply life message on renderer
+    int msg_width, msg_height;
+    SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_LIFES_MESSAGE), NULL, NULL, &msg_width, &msg_height);
+    SDL_Rect target_area = {0, 0, msg_width, msg_height};
+    if(SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_LIFES_MESSAGE), NULL, &target_area) != 0)
+        log_message(LOG_ERROR, "Couldn't render lifes message on the screen !");
+
+
+    //Check if heart texture is already loaded or not
+    if(ui_is_texture_loaded(TEXTURE_HEART) != 1)
+        ui_load_image_into_texture(RES_DIRECTORY"heart.png", TEXTURE_HEART);
+
+    //Retrieve informations about the heart texture
+    int heart_w, heart_h;
+    SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_HEART), NULL, NULL, &heart_w, &heart_h);
+
+    //Render the required number of heart
+    for(int i = 0; i < number_lives; i++){
+
+        //Defines the target area of the heart
+        SDL_Rect heart_target_area = {msg_width + i*heart_w, 0, heart_w, heart_h};
+
+        //Copy heart on renderer
+        SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_HEART), NULL, &heart_target_area);
+
+    }
 
 }

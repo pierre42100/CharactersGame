@@ -134,6 +134,20 @@ void game_started_handle_events(SDL_Event *event){
  * Update game started window
  */
 void game_started_refresh_window(){
+
+    /**
+     * Generic components
+     */
+
+    //Number of lives
+    ui_utils_display_lives();
+
+
+
+    /**
+     * Characters
+     */
+
     //Display the main character
     main_character_display();
 

@@ -22,4 +22,11 @@ void ui_utils_display_loading_message();
  */
 void character_display(Character *character);
 
+/**
+ * Display the number of lives of the main character
+ *
+ * @return void
+ */
+void ui_utils_display_lives();
+
 #endif // UI_UTILS_H_INCLUDED

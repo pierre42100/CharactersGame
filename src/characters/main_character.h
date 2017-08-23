@@ -51,4 +51,11 @@ void main_character_set_pos_y(int y);
  */
 void main_character_move(int movement);
 
+/**
+ * Get the number of lives of the main character
+ *
+ * @return int The number of lives of the main character
+ */
+int main_character_get_lives();
+
 #endif // MAIN_CHARACTER_H_INCLUDED
