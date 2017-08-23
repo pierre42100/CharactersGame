@@ -70,6 +70,10 @@ void game_loop(){
         //Wait for an event
         SDL_WaitEventTimeout(&event, MAX_PAUSE_BETWEEN_SCREEN_REFRESH*1000);
 
+        //Check if event is "quit game"
+        if(event.type == SDL_QUIT)
+            game_quit();
+
         //Handle event
         game_handle_event(&event);
 

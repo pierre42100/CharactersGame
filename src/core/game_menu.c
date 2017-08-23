@@ -56,38 +56,18 @@ void game_menu_display(){
  */
 void game_menu_handle_events(SDL_Event *event){
 
-    //Determine the nature of the current event
-    switch(event->type){
+    int action = menu_handle_event(menu, event);
 
-        //Check if it is a keyboard eventd
-        case SDL_KEYDOWN:
-
-            //The window will certainly need to be refreshed
-            game_screen_to_update(1);
-
-            switch(event->key.keysym.sym){
-
-                //A : start the game
-                case SDLK_a:
-                game_started_start();
-                break;
-
-                //B : quit the application
-                case SDLK_b:
-                case SDLK_ESCAPE:
-                game_quit();
-                break;
-
-
-            }
+    //Check what to do now
+    switch(action){
+        //Start game
+        case 1:
+            game_started_start();
         break;
 
-        //To quit the game
-        case SDL_QUIT:
-            //Change quit variable to true
+        //Quit game
+        case 2:
             game_quit();
         break;
-
     }
-
 }

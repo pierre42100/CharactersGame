@@ -71,4 +71,21 @@ void menu_init_texture(Menu *menu);
  */
 void menu_display(Menu *menu);
 
+/**
+ * Handles events for a menu
+ *
+ * @param Menu *menu Target menu
+ * @param SDL_Event *event Event to handle
+ * @return int value Selected value by user (0 for none)
+ */
+int menu_handle_event(Menu *menu, SDL_Event *event);
+
+/**
+ * Change selected menu option
+ *
+ * @param Menu *menu The menu to update
+ * @param int new_option The new option number
+ */
+void menu_change_selected_option(Menu *menu, int new_option);
+
 #endif // MENU_H_INCLUDED

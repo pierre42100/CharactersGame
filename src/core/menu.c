@@ -9,6 +9,7 @@
 #include "../config.h"
 #include "logging.h"
 #include "menu.h"
+#include "game.h"
 #include "ui.h"
 #include "ui_fonts.h"
 
@@ -138,11 +139,70 @@ void menu_display(Menu *menu){
     SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_STAR), NULL, NULL, &star_w, &star_h);
 
     //Copy the start on the renderer
-    SDL_Rect star_target_area = {MENU_MIN_POS_X-star_w-5, menu->curr_option + MENU_MIN_POS_Y, star_w, star_h};
+    SDL_Rect star_target_area = {MENU_MIN_POS_X-star_w-5, MENU_MIN_POS_Y + menu->curr_option*32, star_w, star_h};
     SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_STAR), NULL, &star_target_area);
 
 
     //Refresh window
     ui_refresh_window();
 
+}
+
+/**
+ * Handles events for a menu
+ *
+ * @param Menu *menu Target menu
+ * @param SDL_Event *event Event to handle
+ * @return int value Selected value by user (0 for none)
+ */
+int menu_handle_event(Menu *menu, SDL_Event *event){
+
+    switch(event->type){
+        case SDL_KEYDOWN:
+            //The game screen will have to be updated
+            game_screen_to_update(1);
+
+            switch(event->key.keysym.sym){
+
+                case SDLK_DOWN:
+                    //Change selected menu option
+                    menu_change_selected_option(menu, menu->curr_option+1);
+                break;
+
+                case SDLK_UP:
+                    //Change selected menu option
+                    menu_change_selected_option(menu, menu->curr_option-1);
+                break;
+
+                case SDLK_RETURN:
+                case SDLK_RETURN2:
+                case SDLK_KP_ENTER:
+                    //Return selected option
+                    return menu->options[menu->curr_option]->value;
+                break;
+
+            }
+
+            break;
+    }
+
+    //It seems that nothing important happened
+    return 0;
+}
+
+
+/**
+ * Change selected menu option
+ *
+ * @param Menu *menu The menu to update
+ * @param int new_option The new option number
+ */
+void menu_change_selected_option(Menu *menu, int new_option){
+
+    //Check if the new option exists or not
+    if(new_option < 0 || menu->number_options <= new_option)
+        return;
+
+    //Save new option
+    menu->curr_option = new_option;
 }
