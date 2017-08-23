@@ -217,6 +217,15 @@ int ui_is_texture_loaded(int texture_number){
 }
 
 /**
+ * Destroy a specified texture
+ *
+ * @param int texture_number The texture to destroy
+ */
+void ui_destroy_texture(int texture_number){
+    SDL_DestroyTexture(textures[texture_number]);
+}
+
+/**
  * Get the pointer on the renderer
  *
  * @return SDL_Renderer *renderer Pointer on renderer

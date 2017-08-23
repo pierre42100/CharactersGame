@@ -25,17 +25,6 @@ void game_menu_display(){
     //Log action
     log_message(LOG_MESSAGE, "Display game menu");
 
-    //Load menu texture if required
-    /*if(ui_is_texture_loaded(TEXTURE_MENU) != 1)
-        ui_load_image_into_texture(RES_DIRECTORY"menu.png", TEXTURE_MENU);
-
-    //Get renderer
-    renderer = ui_get_renderer();
-
-    //Show menu
-    SDL_SetRenderTarget(renderer, NULL);
-    SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_MENU), NULL, NULL);*/
-
     //Create menu if required
     if(menu == NULL){
 
@@ -49,15 +38,14 @@ void game_menu_display(){
             fatal_error("Couldn't allocate memory for menu !");
 
         //Define menu options
-        char option1[] = "Start game";
-        char option2[] = "Quit game";
-        char options[2] = {*option1, *option2};
+        char options[2][11] = {"Start game", "Quit game"};
 
         //Create options
-        *menu = menu_create(options);
+        *menu = menu_create(&options, TEXTURE_MAIN_MENU);
     }
 
-
+    //Display the menu
+    menu_display(menu);
 }
 
 /**
