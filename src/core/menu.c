@@ -129,6 +129,19 @@ void menu_display(Menu *menu){
     if(SDL_RenderCopy(renderer, ui_get_pointer_on_texture(menu->texture_number), NULL, NULL) != 0)
         log_message(LOG_ERROR, "Couldn't copy menu texture on renderer !");
 
+    //Add star
+    if(ui_is_texture_loaded(TEXTURE_STAR) != 1)
+        ui_load_image_into_texture(RES_DIRECTORY"star.png", TEXTURE_STAR);
+
+    //Get informations about the star
+    int star_w, star_h;
+    SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_STAR), NULL, NULL, &star_w, &star_h);
+
+    //Copy the start on the renderer
+    SDL_Rect star_target_area = {MENU_MIN_POS_X-star_w-5, menu->curr_option + MENU_MIN_POS_Y, star_w, star_h};
+    SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_STAR), NULL, &star_target_area);
+
+
     //Refresh window
     ui_refresh_window();
 
