@@ -19,8 +19,9 @@ extern SDL_Renderer *renderer;
  * Create a new menu
  *
  * @param int texture_number The number of the texture in main texture array
+ * @param const char *name The name of the new menu
  */
-Menu menu_create(int texture_number){
+Menu menu_create(int texture_number, const char *name){
 
     //Create menu object
     Menu menu;
@@ -31,6 +32,12 @@ Menu menu_create(int texture_number){
 
     //Initialize the texture of the menu
     menu.texture_number = texture_number;
+
+    //Set menu name
+    menu.name = malloc(sizeof(char)*strlen(name));
+    if(menu.name == NULL)
+        fatal_error("Couldn't allocate memory for menu name !");
+    strcpy(menu.name, name);
 
     //Return result
     return menu;
@@ -89,8 +96,17 @@ void menu_init_texture(Menu *menu){
 
     //Prepare text rendering
     UI_Text text = ui_font_create_variable("no value", 32);
-    ui_font_set_style(&text, FONT_STYLE_ITALIC);
     ui_font_set_target_texture(&text, ui_get_pointer_on_texture(menu->texture_number));
+
+    //Menu name rendering
+    ui_font_set_style(&text, FONT_STYLE_BOLD);
+    ui_font_set_message(&text, menu->name);
+    ui_font_set_coordinates(&text, (WINDOW_WIDTH-text.text_width)/2, 50);
+    ui_font_write_texture(&text);
+
+
+    //Menu options rendering
+    ui_font_set_style(&text, FONT_STYLE_ITALIC);
 
     //Fill the menu with the options
     for(int i = 0; i < menu->number_options; i++){

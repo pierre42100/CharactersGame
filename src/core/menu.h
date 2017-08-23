@@ -37,6 +37,9 @@ typedef struct Menu {
     //Currently selected option
     int curr_option;
 
+    //Menu name
+    char *name;
+
     //The texture that contains the menu
     int texture_number;
 } Menu;
@@ -45,8 +48,9 @@ typedef struct Menu {
  * Create a new menu
  *
  * @param int texture_number The number of the texture in main texture array
+ * @param const char *name The name of the new menu
  */
-Menu menu_create(int texture_number);
+Menu menu_create(int texture_number, const char *name);
 
 /**
  * Add a new menu option
