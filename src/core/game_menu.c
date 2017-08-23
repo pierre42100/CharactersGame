@@ -37,11 +37,12 @@ void game_menu_display(){
         if(menu == NULL)
             fatal_error("Couldn't allocate memory for menu !");
 
-        //Define menu options
-        char options[2][11] = {"Start game", "Quit game"};
+        //Create menu
+        *menu = menu_create(TEXTURE_MAIN_MENU);
 
-        //Create options
-        *menu = menu_create(&options, TEXTURE_MAIN_MENU);
+        //Add menu options
+        menu_add_option(menu, "Start game", 1);
+        menu_add_option(menu, "Quit game", 2);
     }
 
     //Display the menu

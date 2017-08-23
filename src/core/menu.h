@@ -11,6 +11,19 @@
 
 //The maximum number of menu entries
 #define MENU_MAXIMUM_OPTIONS 5
+#define MENU_MIN_POS_X 320
+#define MENU_MIN_POS_Y 220
+
+/**
+ * Menu entry structure
+ */
+typedef struct Menu_Entry {
+    //The full name of the option
+    char *name;
+
+    //The value of the option
+    int value;
+} Menu_Entry;
 
 /**
  * Menu object structure
@@ -18,7 +31,7 @@
 typedef struct Menu {
 
     //The options of the menu
-    char *options[MENU_MAXIMUM_OPTIONS];
+    Menu_Entry *options[MENU_MAXIMUM_OPTIONS];
     int number_options;
 
     //Currently selected option
@@ -31,10 +44,18 @@ typedef struct Menu {
 /**
  * Create a new menu
  *
- * @param const char *options Options of the menu
  * @param int texture_number The number of the texture in main texture array
  */
-Menu menu_create(const char *options[], int texture_number);
+Menu menu_create(int texture_number);
+
+/**
+ * Add a new menu option
+ *
+ * @param Menu *menu The target menu
+ * @param const char *name Option name
+ * @param int value Value of the option
+ */
+void menu_add_option(Menu *menu, const char *name, int value);
 
 /**
  * Initialize the texture of the menu

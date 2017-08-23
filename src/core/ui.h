@@ -25,6 +25,7 @@
 #define TEXTURE_PAUSED_MENU 5
 #define TEXTURE_WALL 6
 #define TEXTURE_GAME_OVER 7
+#define TEXTURE_STAR 8
 
 /**
  * Initializate the SDL library plus create programm windows & renderer
