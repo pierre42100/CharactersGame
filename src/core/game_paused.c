@@ -9,11 +9,12 @@
 #include "game.h"
 #include "game_started.h"
 #include "ui.h"
+#include "menu.h"
 
 /**
  * Variables definition
  */
-static SDL_Renderer *renderer = NULL;
+static Menu *menu = NULL;
 
 /**
  * Makes game pause
@@ -47,16 +48,29 @@ void game_paused_display(){
     //Log action
     log_message(LOG_MESSAGE, "Display game paused menu");
 
-    //Load menu texture if required
-    if(ui_is_texture_loaded(TEXTURE_PAUSED_MENU) != 1)
-        ui_load_image_into_texture(RES_DIRECTORY"paused-menu.png", TEXTURE_PAUSED_MENU);
+    //Check if game paused menu has to be initializated
+    if(menu == NULL){
 
-    //Get renderer
-    renderer = ui_get_renderer();
+        log_message(LOG_MESSAGE, "Create game paused menu");
 
-    //Show menu
-    SDL_SetRenderTarget(renderer, NULL);
-    SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_PAUSED_MENU), NULL, NULL);
+        //Allocate memory
+        menu = malloc(sizeof(Menu));
+
+        //Check for allocation error
+        if(menu == NULL)
+            fatal_error("Couldn't allocate memory for menu !");
+
+        //Create menu
+        *menu = menu_create(TEXTURE_PAUSED_MENU, "Paused game");
+
+        //Add menu options
+        menu_add_option(menu, "Resume game", 1);
+        menu_add_option(menu, "Quit game", 2);
+
+    }
+
+    menu_display(menu);
+
 
 }
 
@@ -67,39 +81,20 @@ void game_paused_display(){
  */
 void game_paused_handle_events(SDL_Event *event){
 
-    //Determine the nature of the current event
-    switch(event->type){
+    //Make menu component handles event
+    int action = menu_handle_event(menu, event);
 
-        //Check if it is a keyboard eventd
-        case SDL_KEYDOWN:
+    //Check what to do
+    switch(action){
 
-            //The window will certainly need to be refreshed
-            game_screen_to_update(1);
-
-            switch(event->key.keysym.sym){
-
-                //ENTER : resume game
-                case SDLK_RETURN:
-                case SDLK_RETURN2:
-                case SDLK_KP_ENTER:
-                game_paused_resume();
-                break;
-
-                //ESCAPE : quit the application
-                case SDLK_ESCAPE:
-                game_started_stop();
-                break;
-
-
-            }
+        //Resume game
+        case 1:
+            game_paused_resume();
         break;
 
-        //To quit the game
-        case SDL_QUIT:
-            //Change quit variable to true
-            game_quit();
+        //Stop game
+        case 2:
+            game_started_stop();
         break;
-
     }
-
 }
