@@ -9,11 +9,13 @@
 #include "game.h"
 #include "game_started.h"
 #include "ui.h"
+#include "menu.h"
 
 /**
  * Variables definition
  */
-static SDL_Renderer *renderer = NULL;
+//static SDL_Renderer *renderer = NULL;
+static Menu *menu = NULL;
 
 /**
  * Display game menu
@@ -24,7 +26,7 @@ void game_menu_display(){
     log_message(LOG_MESSAGE, "Display game menu");
 
     //Load menu texture if required
-    if(ui_is_texture_loaded(TEXTURE_MENU) != 1)
+    /*if(ui_is_texture_loaded(TEXTURE_MENU) != 1)
         ui_load_image_into_texture(RES_DIRECTORY"menu.png", TEXTURE_MENU);
 
     //Get renderer
@@ -32,7 +34,29 @@ void game_menu_display(){
 
     //Show menu
     SDL_SetRenderTarget(renderer, NULL);
-    SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_MENU), NULL, NULL);
+    SDL_RenderCopy(renderer, ui_get_pointer_on_texture(TEXTURE_MENU), NULL, NULL);*/
+
+    //Create menu if required
+    if(menu == NULL){
+
+        log_message(LOG_MESSAGE, "Create main game menu");
+
+        //Allocate memory
+        menu = malloc(sizeof(Menu));
+
+        //Check for allocation error
+        if(menu == NULL)
+            fatal_error("Couldn't allocate memory for menu !");
+
+        //Define menu options
+        char option1[] = "Start game";
+        char option2[] = "Quit game";
+        char options[2] = {*option1, *option2};
+
+        //Create options
+        *menu = menu_create(options);
+    }
+
 
 }
 

@@ -81,6 +81,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/core/logging.h" />
+		<Unit filename="src/core/menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/menu.h" />
 		<Unit filename="src/core/ui.c">
 			<Option compilerVar="CC" />
 		</Unit>
