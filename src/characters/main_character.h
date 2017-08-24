@@ -58,4 +58,9 @@ void main_character_move(int movement);
  */
 int main_character_get_lives();
 
+/**
+ * Make the main character lose one live
+ */
+void main_character_lose_one_live();
+
 #endif // MAIN_CHARACTER_H_INCLUDED

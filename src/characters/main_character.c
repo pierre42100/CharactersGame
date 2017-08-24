@@ -12,9 +12,11 @@
 #include "../core/ui_utils.h"
 #include "../core/logging.h"
 #include "../core/character.h"
+#include "../core/game_over.h"
 #include "main_character.h"
 
 #include "wall.h"
+#include "cross.h"
 
 static Character *main_character = NULL;
 
@@ -86,6 +88,17 @@ void main_character_move(int movement){
         log_message(LOG_VERBOSE, "New main character position denied: character can't walk on walls !");
     }
 
+    //Check if the position is on a cross character
+    if(cross_check_character_presence(main_character)){
+
+        //Log event
+        log_message(LOG_VERBOSE, "New main character has lost one live : is on a cross character !");
+
+        //Character lose one live
+        main_character_lose_one_live();
+
+    }
+
 }
 
 /**
@@ -125,4 +138,20 @@ void main_character_set_pos_y(int y){
  */
 int main_character_get_lives(){
     return main_character->lives;
+}
+
+
+/**
+ * Make the main character lose one live
+ */
+void main_character_lose_one_live(){
+
+    //Make the character lose one live
+    if(main_character->lives > 0)
+        main_character->lives--;
+
+    //Check if character has 0 lives
+    if(main_character->lives <= 0)
+        //This is a game over
+        game_over_enter();
 }

@@ -19,6 +19,7 @@
 #include "game.h"
 
 #include "../characters/wall.h"
+#include "../characters/cross.h"
 
 /**
  * Start the game
@@ -37,7 +38,7 @@ void game_started_start(){
     //Parse JSON file
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
-
+cross_create(15, 5);
     //Update game state
     game_update_state(GAME_STATE_STARTED);
 
@@ -61,6 +62,9 @@ void game_started_stop(){
 
     //Destroy all the walls
     wall_destroy_all();
+
+    //Destroy all cross character
+    cross_destroy_all();
 
     //Update game state
     game_update_state(GAME_STATE_MENU);
@@ -148,9 +152,12 @@ void game_started_refresh_window(){
      * Characters
      */
 
-    //Display the main character
-    main_character_display();
-
     //Display walls
     wall_display_all();
+
+    //Display cross characters
+    cross_display_all();
+
+    //Display the main character
+    main_character_display();
 }
