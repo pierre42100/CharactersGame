@@ -16,6 +16,7 @@
 
 #include "../characters/main_character.h"
 #include "../characters/wall.h"
+#include "../characters/cross.h"
 
 
 /**
@@ -299,6 +300,86 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                 else
                     //Create the wall
                     wall_create(wall_pos_x, wall_pos_y);
+            }
+
+            //Include array entries in i
+            i += array_entries;
+
+        }
+
+        //If informations are about the crosses
+        else if(json_check_two_keys(json_string, &tokens[i], "crosses") == 0){
+
+            //If the next item isn't an object we report an error
+            if(tokens[i+1].type != JSMN_ARRAY){
+                log_message(LOG_ERROR, "Array excepted after token 'crosses' !");
+
+                continue;
+            }
+
+            //Update main counter
+            i++; //To upgrade to main_character object (that contains other properties)
+
+            //Process each element of the array
+            int array_entries = tokens[i].size;
+            for(int j = 1; j <= array_entries; j++){
+
+                //Check if array entry is an object or not
+                if(tokens[i + j].type != JSMN_OBJECT){
+                    log_message(LOG_ERROR, "'crosess' array entries must be of type 'array' and not anything else !");
+                    continue; //Skip entry
+                }
+
+                //Declare cross informations
+                int cross_pos_x = -1;
+                int cross_pos_y = -1;
+
+                //Process crosses object
+                int cross_infos_size = tokens[i + j].size;
+                for(int k = 1; k <= cross_infos_size; k++){
+
+                    //Base count
+                    int count = i + j + k;
+
+                    //Determine the kind of value
+                    //X_axis coordinate
+                    if(json_check_two_keys(json_string, &tokens[count], "pos_x") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        cross_pos_x = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Y_axis coordinate
+                    else if(json_check_two_keys(json_string, &tokens[count], "pos_y") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        cross_pos_y = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Unexcepted error
+                    else {
+                        log_message(LOG_ERROR, "Parse error : crosses->array_element->property_name : Unrecognised value !");
+                        continue;
+                    }
+
+                    //Increment counter by one
+                    i++;
+
+
+                }
+
+                //Increment i for each object proprety key
+                i += cross_infos_size;
+
+
+                //Check all the informations required to create the cross are present
+                if(
+                    cross_pos_x < 0 ||
+                    cross_pos_y < 0
+                )
+                    //Display error
+                    log_message(LOG_ERROR, "Unefficient informations to create a cross character !");
+                else
+                    //Create the wall
+                    cross_create(cross_pos_x, cross_pos_y);
             }
 
             //Include array entries in i
