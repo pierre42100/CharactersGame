@@ -146,6 +146,8 @@ void game_started_refresh_window(){
     //Number of lives
     ui_utils_display_lives();
 
+    //Score
+    ui_utils_display_score();
 
 
     /**

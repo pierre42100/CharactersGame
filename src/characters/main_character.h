@@ -17,6 +17,8 @@ typedef struct MainCharacter {
     //Generic informations about the character
     Character character;
 
+    //Score of the main character
+    int score;
 
 
 } MainCharacter;
@@ -76,5 +78,10 @@ int main_character_get_lives();
  * Make the main character lose one live
  */
 void main_character_lose_one_live();
+
+/**
+ * Get the score of the main character
+ */
+int main_character_get_score();
 
 #endif // MAIN_CHARACTER_H_INCLUDED

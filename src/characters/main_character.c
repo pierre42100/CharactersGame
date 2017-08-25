@@ -41,6 +41,10 @@ void main_character_create(){
     //Increase character speed
     new_character.character.speed = 1;
 
+    //Set main character score to 0
+    new_character.score = 0;
+
+    //Save new main charater
     //Allocate memory for the character
     main_character = malloc(sizeof(MainCharacter));
 
@@ -160,4 +164,13 @@ void main_character_lose_one_live(){
     if(main_character->character.lives <= 0)
         //This is a game over
         game_over_enter();
+}
+
+
+/**
+ * Get the score of the main character
+ */
+int main_character_get_score(){
+    //Return the score of the main character
+    return main_character->score;
 }

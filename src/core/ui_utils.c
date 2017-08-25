@@ -114,7 +114,7 @@ void ui_utils_display_lives(){
     log_message(LOG_VERBOSE, "Display the number of lives of the character");
 
     //Get the number of lives of the main character
-    int number_lives = main_character_get_lives();
+    int number_lives = main_character_get_lives() - 1; //Remove on live (the last one -> not displayed)
 
     //Check if a texture for the number of lifes message already exist or not
     if(ui_is_texture_loaded(TEXTURE_LIFES_MESSAGE) != 1){
@@ -153,7 +153,7 @@ void ui_utils_display_lives(){
     SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_HEART), NULL, NULL, &heart_w, &heart_h);
 
     //Render the required number of heart
-    for(int i = 1; i < number_lives; i++){
+    for(int i = 0; i < number_lives; i++){
 
         //Defines the target area of the heart
         SDL_Rect heart_target_area = {msg_width + i*heart_w, 0, heart_w, heart_h};
@@ -163,4 +163,40 @@ void ui_utils_display_lives(){
 
     }
 
+}
+
+/**
+ * Display the score of the main character
+ *
+ * @return void
+ */
+void ui_utils_display_score(){
+
+    //Get the score of the character
+    int character_score = main_character_get_score();
+
+    //Generate the message to display on the screen
+    char *message = NULL;
+    message = malloc(20 * sizeof(char));
+    if(message == NULL)
+        fatal_error("Couldn't allocate memory to display score !");
+    sprintf(message, "Score: %d", character_score);
+
+
+    //Display character score on the screen
+    UI_Text score_text = ui_font_create_variable(message, 14);
+    ui_font_set_target_texture(&score_text, NULL);
+
+    //Compute position of the score
+    ui_font_set_coordinates(
+        &score_text,
+        WINDOW_WIDTH-score_text.text_width-10,
+        0
+    );
+
+    //Write score on the screen
+    ui_font_write_texture(&score_text);
+
+    //Free memory
+    free(message);
 }

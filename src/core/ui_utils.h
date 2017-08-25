@@ -29,4 +29,11 @@ void character_display(Character *character);
  */
 void ui_utils_display_lives();
 
+/**
+ * Display the score of the main character
+ *
+ * @return void
+ */
+void ui_utils_display_score();
+
 #endif // UI_UTILS_H_INCLUDED
