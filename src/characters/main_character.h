@@ -7,6 +7,20 @@
  * @author Pierre HUBERT
  */
 
+#include "../core/character.h"
+
+/**
+ * Define main character object
+ */
+typedef struct MainCharacter {
+
+    //Generic informations about the character
+    Character character;
+
+
+
+} MainCharacter;
+
 /**
  * Create the main character
  */

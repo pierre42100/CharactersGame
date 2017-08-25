@@ -153,7 +153,7 @@ void ui_utils_display_lives(){
     SDL_QueryTexture(ui_get_pointer_on_texture(TEXTURE_HEART), NULL, NULL, &heart_w, &heart_h);
 
     //Render the required number of heart
-    for(int i = 0; i < number_lives; i++){
+    for(int i = 1; i < number_lives; i++){
 
         //Defines the target area of the heart
         SDL_Rect heart_target_area = {msg_width + i*heart_w, 0, heart_w, heart_h};

@@ -40,6 +40,10 @@
 		<Linker>
 			<Add option="`sdl2-config --libs`" />
 		</Linker>
+		<Unit filename="src/characters/cross.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/characters/cross.h" />
 		<Unit filename="src/characters/main_character.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -18,7 +18,7 @@
 #include "wall.h"
 #include "cross.h"
 
-static Character *main_character = NULL;
+static MainCharacter *main_character = NULL;
 
 /**
  * Create the main character
@@ -28,21 +28,26 @@ void main_character_create(){
     //Verbose message
     log_message(LOG_VERBOSE, "Creating main character...");
 
+    //Declare variables
+    MainCharacter new_character;
+
+    //Create the character
+    new_character.character = character_load(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
+
+    //Place the character on the center of the screen
+    new_character.character.pos_x = (GAME_NB_CELL_X_AXIS)/2;
+    new_character.character.pos_y = (GAME_NB_CELL_Y_AXIS)/2;
+
+    //Increase character speed
+    new_character.character.speed = 1;
+
     //Allocate memory for the character
-    main_character = malloc(sizeof(Character));
+    main_character = malloc(sizeof(MainCharacter));
 
     if(main_character == NULL)
         fatal_error("Couldn't allocate memory for the main character!");
 
-    //Create the character
-    *main_character = character_load(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
-
-    //Place the character on the center of the screen
-    main_character->pos_x = (GAME_NB_CELL_X_AXIS)/2;
-    main_character->pos_y = (GAME_NB_CELL_Y_AXIS)/2;
-
-    //Increase character speed
-    main_character->speed = 1;
+    *main_character = new_character;
 
     //End of function
     return;
@@ -55,7 +60,8 @@ void main_character_create(){
 void main_character_destroy(){
 
     //Destroy the character
-    character_destroy(main_character);
+    //character_destroy(&main_character->character);
+    free(main_character);
 
     //Reset cursor
     main_character = NULL;
@@ -67,7 +73,7 @@ void main_character_destroy(){
  */
 void main_character_display(){
     //Display the main character
-    character_display(main_character);
+    character_display(&main_character->character);
 }
 
 /**
@@ -77,19 +83,19 @@ void main_character_display(){
  */
 void main_character_move(int movement){
     //Move the character
-    character_move(main_character, movement);
+    character_move(&main_character->character, movement);
 
     //Check if the new position of the character isn't on a wall
-    if(wall_check_character_presence(main_character) == 1){
+    if(wall_check_character_presence(&main_character->character) == 1){
         //Put the character on its old positions
-        main_character_set_location(main_character->old_pos_x, main_character->old_pos_y);
+        main_character_set_location(main_character->character.old_pos_x, main_character->character.old_pos_y);
 
         //Log message
         log_message(LOG_VERBOSE, "New main character position denied: character can't walk on walls !");
     }
 
     //Check if the position is on a cross character
-    if(cross_check_character_presence(main_character)){
+    if(cross_check_character_presence(&main_character->character)){
 
         //Log event
         log_message(LOG_VERBOSE, "New main character has lost one live : is on a cross character !");
@@ -108,8 +114,8 @@ void main_character_move(int movement){
  * @param int y > Coordinates of the new location
  */
 void main_character_set_location(int x, int y){
-    main_character->pos_x = x;
-    main_character->pos_y = y;
+    main_character->character.pos_x = x;
+    main_character->character.pos_y = y;
 }
 
 /**
@@ -118,7 +124,7 @@ void main_character_set_location(int x, int y){
  * @param int x
  */
 void main_character_set_pos_x(int x){
-    main_character->pos_x = x;
+    main_character->character.pos_x = x;
 }
 
 /**
@@ -127,7 +133,7 @@ void main_character_set_pos_x(int x){
  * @param int y
  */
 void main_character_set_pos_y(int y){
-    main_character->pos_y = y;
+    main_character->character.pos_y = y;
 }
 
 
@@ -137,7 +143,7 @@ void main_character_set_pos_y(int y){
  * @return int The number of lives of the main character
  */
 int main_character_get_lives(){
-    return main_character->lives;
+    return main_character->character.lives;
 }
 
 
@@ -147,11 +153,11 @@ int main_character_get_lives(){
 void main_character_lose_one_live(){
 
     //Make the character lose one live
-    if(main_character->lives > 0)
-        main_character->lives--;
+    if(main_character->character.lives > 0)
+        main_character->character.lives--;
 
     //Check if character has 0 lives
-    if(main_character->lives <= 0)
+    if(main_character->character.lives <= 0)
         //This is a game over
         game_over_enter();
 }

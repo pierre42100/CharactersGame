@@ -51,7 +51,7 @@ Character character_load(const char *filename, int target_texture){
     new_character.speed = 1;
 
     //Define character number of lives
-    new_character.max_lives = 3;
+    new_character.max_lives = 4;
     new_character.lives = new_character.max_lives;
 
     //Return newly created character
