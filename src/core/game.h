@@ -31,6 +31,13 @@ void game_init();
 void game_update_state(int new_state);
 
 /**
+ * Get game state
+ *
+ * @return int The state of the game
+ */
+int game_get_state();
+
+/**
  * Game loop (handles events happening during the game and process them)
  */
 void game_loop();

@@ -7,6 +7,7 @@
 
 #include "../config.h"
 #include "../core/logging.h"
+#include "../core/game.h"
 #include "../core/ui.h"
 #include "../core/ui_utils.h"
 #include "../core/character.h"
@@ -98,7 +99,7 @@ void pizza_destroy_all(){
 
 
 /**
- * Display the pizzaes
+ * Display the pizzas
  *
  * @return void
  */
@@ -165,6 +166,10 @@ int pizza_check_character_presence(Character *character){
  * @param Character *character The character object of the main character
  */
 void pizza_check_main_character(Character *character){
+
+    //Retrieve game state
+    if(game_get_state() != GAME_STATE_STARTED)
+        return; //Not any game started
 
     //Log action
     log_message(LOG_VERBOSE, "Check if main character is on a pizza or not...");

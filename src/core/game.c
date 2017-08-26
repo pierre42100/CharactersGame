@@ -199,6 +199,15 @@ void game_update_state(int new_state){
 }
 
 /**
+ * Get game state
+ *
+ * @return int The state of the game
+ */
+int game_get_state(){
+    return game_state;
+}
+
+/**
  * Game routine thread
  *
  * @param *void Nothing
