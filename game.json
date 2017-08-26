@@ -24,7 +24,7 @@
 	],
 
 
-	"crosses":[
+	"crosses": [
 		{
 			"pos_x": 1,
 			"pos_y": 4,
@@ -32,6 +32,19 @@
 		{
 			"pos_x": 1,
 			"pos_y": 5,
+		}
+	],
+
+
+	"pizzas": [
+		{
+			"pos_x": 4,
+			"pos_y": 9,
+		},
+
+		{
+			"pos_x": 5,
+			"pos_y": 11,
 		}
 	]
 }
