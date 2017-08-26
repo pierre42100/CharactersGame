@@ -414,6 +414,7 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                 //Declare pizza informations
                 int pizza_pos_x = -1;
                 int pizza_pos_y = -1;
+                int pizza_regeneration_interval = -1;
 
                 //Process pizzas object
                 int pizza_infos_size = tokens[i + j].size;
@@ -435,6 +436,12 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                         pizza_pos_y = json_extract_integer(json_string, &tokens[i+j+k+1]);
                     }
 
+                    //Regeneration interval
+                    else if(json_check_two_keys(json_string, &tokens[count], "regeneration_interval") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        pizza_regeneration_interval = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
                     //Unexcepted error
                     else {
                         log_message(LOG_ERROR, "Parse error : pizzas->array_element->property_name : Unrecognised value !");
@@ -454,13 +461,14 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                 //Check all the informations required to create the pizza are present
                 if(
                     pizza_pos_x < 0 ||
-                    pizza_pos_y < 0
+                    pizza_pos_y < 0 ||
+                    pizza_regeneration_interval < 0
                 )
                     //Display error
                     log_message(LOG_ERROR, "Unefficient informations to create a pizza character !");
                 else
                     //Create the wall
-                    pizza_create(pizza_pos_x, pizza_pos_y);
+                    pizza_create(pizza_pos_x, pizza_pos_y, pizza_regeneration_interval);
             }
 
             //Include array entries in i

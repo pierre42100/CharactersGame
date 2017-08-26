@@ -30,9 +30,10 @@ typedef struct Pizza {
  *
  * @param int x
  * @param int y > Coordinates of the first point of the wall element
+ * @param int regeneration_interval The minimum interval before the pizza can be eaten again
  * @return void
  */
-void pizza_create(int x, int y);
+void pizza_create(int x, int y, int regeneration_interval);
 
 /**
  * Destroy all the pizza characters

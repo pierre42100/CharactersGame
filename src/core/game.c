@@ -86,10 +86,10 @@ void game_loop(){
         }
 
         //Check if it is required to refresh screen
-        if(need_window_refresh == 1){
+        //if(need_window_refresh == 1){
             game_refresh_screen();
-            need_window_refresh = 0;
-        }
+            //need_window_refresh = 0;
+        //}
     }
 
 }

@@ -25,9 +25,10 @@ static Pizza *last_pizza = NULL;
  *
  * @param int x
  * @param int y > Coordinates of the first point of the pizza character element
+ * @param int regeneration_interval The minimum interval before the pizza can be eaten again
  * @return void
  */
-void pizza_create(int x, int y){
+void pizza_create(int x, int y,  int regeneration_interval){
 
     //Declare variables
     Pizza *new_pizza = NULL;
@@ -59,7 +60,7 @@ void pizza_create(int x, int y){
     new_pizza->character.pos_y = y;
 
     //Update pizza appeareance frequrency
-    new_pizza->regeneration_interval = 2;
+    new_pizza->regeneration_interval = regeneration_interval;
 
     //Reset counter
     new_pizza->last_use = 0;

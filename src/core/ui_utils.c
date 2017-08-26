@@ -211,7 +211,7 @@ void ui_utils_display_score(){
 void ui_utils_display_time(){
 
     //Main character age = game time
-    int game_time = main_character_get_age()+3580;
+    int game_time = main_character_get_age();
 
     //Calculate number of hours / minutes / seconds of the game
     int number_seconds = game_time - (floor(game_time/60)*60);
