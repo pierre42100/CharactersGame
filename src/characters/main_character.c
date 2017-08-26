@@ -17,6 +17,7 @@
 
 #include "wall.h"
 #include "cross.h"
+#include "pizza.h"
 
 static MainCharacter *main_character = NULL;
 
@@ -109,6 +110,9 @@ void main_character_move(int movement){
 
     }
 
+    //Perform "pizza check"
+    pizza_check_main_character(&main_character->character);
+
 }
 
 /**
@@ -173,6 +177,15 @@ void main_character_lose_one_live(){
 int main_character_get_score(){
     //Return the score of the main character
     return main_character->score;
+}
+
+/**
+ * Increase main character score by the provided value
+ *
+ * @param int addition The points to add to the main score
+ */
+void main_character_increase_score(int addition){
+    main_character->score += addition;
 }
 
 

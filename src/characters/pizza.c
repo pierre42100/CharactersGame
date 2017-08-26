@@ -3,6 +3,7 @@
  *
  * @author Pierre HUBERT
  */
+#include <time.h>
 
 #include "../config.h"
 #include "../core/logging.h"
@@ -10,6 +11,7 @@
 #include "../core/ui_utils.h"
 #include "../core/character.h"
 
+#include "main_character.h"
 #include "pizza.h"
 
 /**
@@ -55,6 +57,12 @@ void pizza_create(int x, int y){
     //Update pizza character coordinates
     new_pizza->character.pos_x = x;
     new_pizza->character.pos_y = y;
+
+    //Update pizza appeareance frequrency
+    new_pizza->regeneration_interval = 2;
+
+    //Reset counter
+    new_pizza->last_use = 0;
 }
 
 /**
@@ -107,8 +115,9 @@ void pizza_display_all(){
     curr_pizza = last_pizza;
     while(curr_pizza != NULL){
 
-        //Display the pizza character
-        character_display(&curr_pizza->character);
+        //Display the pizza character (only if available)
+        if((time(NULL) - curr_pizza->last_use) > curr_pizza->regeneration_interval)
+            character_display(&curr_pizza->character);
 
         //Get the next pizza character memory address
         curr_pizza = curr_pizza->nextPizza;
@@ -147,4 +156,48 @@ int pizza_check_character_presence(Character *character){
     //If we get there, there isn't any collision
     return 0;
 
+}
+
+/**
+ * Check if the main character is on a pizza or not
+ *
+ * @param Character *character The character object of the main character
+ */
+void pizza_check_main_character(Character *character){
+
+    //Log action
+    log_message(LOG_VERBOSE, "Check if main character is on a pizza or not...");
+
+    //Declare variables
+    Pizza *curr_pizza = NULL;
+
+    //Check if at least one character exists before
+    if(last_pizza == NULL)
+        return; //There isn't any pizza character
+
+
+    //Process all the pizzas
+    curr_pizza = last_pizza;
+    while(curr_pizza != NULL){
+
+        //Check pizza character
+        if(character_check_collision(character, &curr_pizza->character) != 0){
+
+            //Check if the pizza can be eaten or not
+            if((time(NULL) - curr_pizza->last_use) > curr_pizza->regeneration_interval){
+
+                //Increase main character score
+                main_character_increase_score(10);
+
+                //Update counter
+                curr_pizza->last_use = time(NULL);
+            }
+
+            return; //There is a collision
+        }
+
+        //Get the next pizza character memory address
+        curr_pizza = curr_pizza->nextPizza;
+
+    }
 }

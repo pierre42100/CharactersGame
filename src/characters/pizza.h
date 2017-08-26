@@ -18,6 +18,10 @@ typedef struct Pizza {
     //Position of the next character
     struct Pizza *nextPizza;
 
+    //Intervals of the pizza (in seconds)
+    unsigned long last_use;
+    int regeneration_interval;
+
 } Pizza;
 
 
@@ -51,5 +55,12 @@ void pizza_display_all();
  * @return int 1 = Yes, the character is on the character / 0 = No, the character isn't on a pizza character
  */
 int pizza_check_character_presence(Character *character);
+
+/**
+ * Check if the main character is on a pizza or not
+ *
+ * @param Character *character The character object of the main character
+ */
+void pizza_check_main_character(Character *character);
 
 #endif // PIZZA_H_INCLUDED
