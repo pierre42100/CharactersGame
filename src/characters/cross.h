@@ -10,7 +10,7 @@
 #include "../core/character.h"
 
 /**
- * Defines wall object
+ * Defines cross object
  */
 typedef struct Cross {
 

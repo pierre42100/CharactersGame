@@ -1,7 +1,7 @@
 /**
  * UI functions - Header file
  *
- * This file handle the main graphical operations
+ * This file handles the main graphical operations
  *
  * @author Pierre HUBERT
  */
@@ -16,7 +16,7 @@
 /**
  * Textures definition
  */
-#define NUMBER_TEXTURES 12
+#define NUMBER_TEXTURES 13
 
 //Included images
 #define TEXTURE_GRASS 0
@@ -25,6 +25,7 @@
 #define TEXTURE_STAR 8
 #define TEXTURE_HEART 10
 #define TEXTURE_CROSS 11
+#define TEXTURE_PIZZA 12
 
 //Generated textures
 #define TEXTURE_BACKGROUND 1

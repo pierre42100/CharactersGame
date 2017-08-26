@@ -20,6 +20,7 @@
 
 #include "../characters/wall.h"
 #include "../characters/cross.h"
+#include "../characters/pizza.h"
 
 /**
  * Start the game
@@ -162,6 +163,9 @@ void game_started_refresh_window(){
 
     //Display cross characters
     cross_display_all();
+
+    //Display pizzas
+    pizza_display_all();
 
     //Display the main character
     main_character_display();
