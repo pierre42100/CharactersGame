@@ -5,6 +5,7 @@
  */
 
 #include <SDL2/SDL.h>
+#include <math.h>
 
 #include "../config.h"
 #include "logging.h"
@@ -199,4 +200,49 @@ void ui_utils_display_score(){
 
     //Free memory
     free(message);
+}
+
+
+/**
+ * Display the time spent since the game started
+ *
+ * @return void
+ */
+void ui_utils_display_time(){
+
+    //Main character age = game time
+    int game_time = main_character_get_age()+3580;
+
+    //Calculate number of hours / minutes / seconds of the game
+    int number_seconds = game_time - (floor(game_time/60)*60);
+    game_time = (game_time - number_seconds)/60;
+    int number_minutes = game_time - floor(game_time/60)*60;
+    game_time = (game_time-number_minutes)/60;
+    int number_hours = game_time;
+
+    //Generate the message to display on the screen
+    char *message = NULL;
+    message = malloc(12 * sizeof(char));
+    if(message == NULL)
+        fatal_error("Couldn't allocate memory to display game time !");
+    sprintf(message, "%d:%d:%d", number_hours, number_minutes, number_seconds);
+
+
+    //Display game time on the screen
+    UI_Text time_text = ui_font_create_variable(message, 14);
+    ui_font_set_target_texture(&time_text, NULL);
+
+    //Compute position of the time counter
+    ui_font_set_coordinates(
+        &time_text,
+        (WINDOW_WIDTH-time_text.text_width)/2,
+        0
+    );
+
+    //Write time on the screen
+    ui_font_write_texture(&time_text);
+
+    //Free memory
+    free(message);
+
 }

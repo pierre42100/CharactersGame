@@ -36,6 +36,9 @@ struct Character {
     int max_lives;
     int lives;
 
+    //Creation of the character
+    unsigned long time_creation;
+
 };
 typedef struct Character Character;
 
@@ -80,5 +83,13 @@ void character_destroy(Character *character);
  * @return int 1 = There is a collison / 0 = There isn't any collision
  */
 int character_check_collision(Character *character_1, Character *character_2);
+
+/**
+ * Get the age of a character
+ *
+ * @param Character *character The character to get the age
+ * @return int The age of the character
+ */
+int character_get_age(Character *character);
 
 #endif // CHARACTER_H_INCLUDED

@@ -3,8 +3,8 @@
  *
  * @author Pierre HUBERT
  */
-
 #include <SDL2/SDL.h>
+#include <time.h>
 
 #include "../config.h"
 #include "logging.h"
@@ -53,6 +53,9 @@ Character character_load(const char *filename, int target_texture){
     //Define character number of lives
     new_character.max_lives = 4;
     new_character.lives = new_character.max_lives;
+
+    //Save the time of creation of the character
+    new_character.time_creation = (unsigned long)time(NULL);
 
     //Return newly created character
     return new_character;
@@ -145,4 +148,18 @@ int character_check_collision(Character *character_1, Character *character_2){
 
     //Check if the two rectangles have common points or not
     return (SDL_HasIntersection(&rect1, &rect2) == SDL_TRUE) ? 1 : 0;
+}
+
+/**
+ * Get the age of a character
+ *
+ * @param Character *character The character to get the age
+ * @return int The age of the character
+ */
+int character_get_age(Character *character){
+    //Get the current time
+    unsigned long curr_time = time(NULL);
+
+    //Return result
+    return (int)(curr_time - character->time_creation);
 }

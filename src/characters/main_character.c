@@ -174,3 +174,13 @@ int main_character_get_score(){
     //Return the score of the main character
     return main_character->score;
 }
+
+
+/**
+ * Get the age of the main character
+ *
+ * @return int age The age of the main character
+ */
+int main_character_get_age(){
+    return character_get_age(&main_character->character);
+}

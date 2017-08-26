@@ -33,6 +33,6 @@
 
 //Pause between two games routines execution
 #define PAUSE_BETWEEN_GAME_ROUTINES 5
-#define MAX_PAUSE_BETWEEN_SCREEN_REFRESH 2
+#define MAX_PAUSE_BETWEEN_SCREEN_REFRESH 1
 
 #endif // CONFIG_H_INCLUDED

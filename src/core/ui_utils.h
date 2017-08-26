@@ -36,4 +36,11 @@ void ui_utils_display_lives();
  */
 void ui_utils_display_score();
 
+/**
+ * Display the time spent since the game started
+ *
+ * @return void
+ */
+void ui_utils_display_time();
+
 #endif // UI_UTILS_H_INCLUDED

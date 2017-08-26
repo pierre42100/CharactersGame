@@ -84,4 +84,11 @@ void main_character_lose_one_live();
  */
 int main_character_get_score();
 
+/**
+ * Get the age of the main character
+ *
+ * @return int age The age of the main character
+ */
+int main_character_get_age();
+
 #endif // MAIN_CHARACTER_H_INCLUDED
