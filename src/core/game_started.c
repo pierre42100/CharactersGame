@@ -21,6 +21,7 @@
 #include "../characters/wall.h"
 #include "../characters/cross.h"
 #include "../characters/pizza.h"
+#include "../characters/heart.h"
 
 /**
  * Start the game
@@ -39,7 +40,7 @@ void game_started_start(){
     //Parse JSON file
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
-
+heart_create(15, 12, 3);
     //Update game state
     game_update_state(GAME_STATE_STARTED);
 
@@ -66,6 +67,12 @@ void game_started_stop(){
 
     //Destroy all cross character
     cross_destroy_all();
+
+    //Destroy all the pizza
+    pizza_destroy_all();
+
+    //Destroy all the hearts characters
+    heart_destroy_all();
 
     //Update game state
     game_update_state(GAME_STATE_MENU);
@@ -166,6 +173,9 @@ void game_started_refresh_window(){
 
     //Display pizzas
     pizza_display_all();
+
+    //Display hearts
+    heart_display_all();
 
     //Display the main character
     main_character_display();

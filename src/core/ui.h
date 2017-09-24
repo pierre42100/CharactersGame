@@ -16,7 +16,7 @@
 /**
  * Textures definition
  */
-#define NUMBER_TEXTURES 13
+#define NUMBER_TEXTURES 14
 
 //Included images
 #define TEXTURE_GRASS 0
@@ -26,6 +26,7 @@
 #define TEXTURE_HEART 10
 #define TEXTURE_CROSS 11
 #define TEXTURE_PIZZA 12
+#define TEXTURE_HEART_CHARACTER 13
 
 //Generated textures
 #define TEXTURE_BACKGROUND 1

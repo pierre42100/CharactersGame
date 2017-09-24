@@ -44,10 +44,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/characters/cross.h" />
+		<Unit filename="src/characters/heart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/characters/heart.h" />
 		<Unit filename="src/characters/main_character.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/characters/main_character.h" />
+		<Unit filename="src/characters/pizza.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/characters/pizza.h" />
 		<Unit filename="src/characters/wall.c">
 			<Option compilerVar="CC" />
 		</Unit>

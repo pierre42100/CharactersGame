@@ -80,6 +80,11 @@ int main_character_get_lives();
 void main_character_lose_one_live();
 
 /**
+ * Make the main character gain one live
+ */
+void main_character_earn_live();
+
+/**
  * Get the score of the main character
  */
 int main_character_get_score();

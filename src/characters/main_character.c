@@ -18,6 +18,7 @@
 #include "wall.h"
 #include "cross.h"
 #include "pizza.h"
+#include "heart.h"
 
 static MainCharacter *main_character = NULL;
 
@@ -113,6 +114,9 @@ void main_character_move(int movement){
     //Perform "pizza check"
     pizza_check_main_character(&main_character->character);
 
+    //Perform "heart check"
+    heart_check_main_character(&main_character->character);
+
 }
 
 /**
@@ -168,6 +172,13 @@ void main_character_lose_one_live(){
     if(main_character->character.lives <= 0)
         //This is a game over
         game_over_enter();
+}
+
+/**
+ * Make the main character gain one live
+ */
+void main_character_earn_live(){
+    main_character->character.lives++;
 }
 
 
