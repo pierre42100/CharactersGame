@@ -40,7 +40,7 @@ void game_started_start(){
     //Parse JSON file
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
-heart_create(15, 12, 3);
+
     //Update game state
     game_update_state(GAME_STATE_STARTED);
 

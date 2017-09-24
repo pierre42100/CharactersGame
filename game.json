@@ -38,7 +38,7 @@
 
 	"pizzas": [
 		{
-			"pos_x": 4,
+			"pos_x": 5,
 			"pos_y": 9,
 			"regeneration_interval": 5,
 		},
@@ -46,6 +46,20 @@
 		{
 			"pos_x": 5,
 			"pos_y": 11,
+			"regeneration_interval": 1,
+		}
+	],
+
+	"hearts": [
+		{
+			"pos_x": 5,
+			"pos_y": 10,
+			"regeneration_interval": 5,
+		},
+
+		{
+			"pos_x": 5,
+			"pos_y": 12,
 			"regeneration_interval": 1,
 		}
 	]

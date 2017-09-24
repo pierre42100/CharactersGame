@@ -18,6 +18,7 @@
 #include "../characters/wall.h"
 #include "../characters/cross.h"
 #include "../characters/pizza.h"
+#include "../characters/heart.h"
 
 
 /**
@@ -469,6 +470,94 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                 else
                     //Create the wall
                     pizza_create(pizza_pos_x, pizza_pos_y, pizza_regeneration_interval);
+            }
+
+            //Include array entries in i
+            i += array_entries;
+
+        }
+
+        //If informations are about the hearts
+        else if(json_check_two_keys(json_string, &tokens[i], "hearts") == 0){
+
+            //If the next item isn't an object we report an error
+            if(tokens[i+1].type != JSMN_ARRAY){
+                log_message(LOG_ERROR, "Array excepted after token 'hearts' !");
+
+                continue;
+            }
+
+            //Update main counter
+            i++; //To upgrade to main_character object (that contains other properties)
+
+            //Process each element of the array
+            int array_entries = tokens[i].size;
+            for(int j = 1; j <= array_entries; j++){
+
+                //Check if array entry is an object or not
+                if(tokens[i + j].type != JSMN_OBJECT){
+                    log_message(LOG_ERROR, "'hearts' array entries must be of type 'array' and not anything else !");
+                    continue; //Skip entry
+                }
+
+                //Declare heart informations
+                int heart_pos_x = -1;
+                int heart_pos_y = -1;
+                int heart_regeneration_interval = -1;
+
+                //Process hearts object
+                int heart_infos_size = tokens[i + j].size;
+                for(int k = 1; k <= heart_infos_size; k++){
+
+                    //Base count
+                    int count = i + j + k;
+
+                    //Determine the kind of value
+                    //X_axis coordinate
+                    if(json_check_two_keys(json_string, &tokens[count], "pos_x") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        heart_pos_x = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Y_axis coordinate
+                    else if(json_check_two_keys(json_string, &tokens[count], "pos_y") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        heart_pos_y = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Regeneration interval
+                    else if(json_check_two_keys(json_string, &tokens[count], "regeneration_interval") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        heart_regeneration_interval = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Unexcepted error
+                    else {
+                        log_message(LOG_ERROR, "Parse error : hearts->array_element->property_name : Unrecognised value !");
+                        continue;
+                    }
+
+                    //Increment counter by one
+                    i++;
+
+
+                }
+
+                //Increment i for each object proprety key
+                i += heart_infos_size;
+
+
+                //Check all the informations required to create the heart are present
+                if(
+                    heart_pos_x < 0 ||
+                    heart_pos_y < 0 ||
+                    heart_regeneration_interval < 0
+                )
+                    //Display error
+                    log_message(LOG_ERROR, "Unefficient informations to create a heart character !");
+                else
+                    //Create the wall
+                    heart_create(heart_pos_x, heart_pos_y, heart_regeneration_interval);
             }
 
             //Include array entries in i
