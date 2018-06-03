@@ -46,11 +46,6 @@ void game_started_start(){
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
 
-    //TODO : remove
-    monster_create(10, 10, 1);
-    monster_create(15, 15, 2);
-    monster_create(20, 20, 3);
-
     //Update game state
     game_update_state(GAME_STATE_STARTED);
 

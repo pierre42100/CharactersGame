@@ -19,6 +19,7 @@
 #include "../characters/cross.h"
 #include "../characters/pizza.h"
 #include "../characters/heart.h"
+#include "../characters/monster.h"
 
 
 /**
@@ -88,7 +89,7 @@ void json_parse_game_file(const char *filename){
 
     //Check for other errors
     if(error < 0){
-        fatal_error("An uknow error occured while trying to decode JSON!");
+        fatal_error("An unknown error occurred while trying to decode JSON!");
     }
 
     //Now we can read JSON code
@@ -543,7 +544,7 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
 
                 }
 
-                //Increment i for each object proprety key
+                //Increment i for each object property key
                 i += heart_infos_size;
 
 
@@ -558,6 +559,94 @@ void json_parse_results(jsmn_parser *parser, jsmntok_t *tokens, int number_resul
                 else
                     //Create the wall
                     heart_create(heart_pos_x, heart_pos_y, heart_regeneration_interval);
+            }
+
+            //Include array entries in i
+            i += array_entries;
+
+        }
+
+        //If information are about the monsters
+        else if(json_check_two_keys(json_string, &tokens[i], "monsters") == 0){
+
+            //If the next item isn't an object we report an error
+            if(tokens[i+1].type != JSMN_ARRAY){
+                log_message(LOG_ERROR, "Array excepted after token 'monsters' !");
+
+                continue;
+            }
+
+            //Update main counter
+            i++; //To upgrade to main_character object (that contains other properties)
+
+            //Process each element of the array
+            int array_entries = tokens[i].size;
+            for(int j = 1; j <= array_entries; j++){
+
+                //Check if array entry is an object or not
+                if(tokens[i + j].type != JSMN_OBJECT){
+                    log_message(LOG_ERROR, "'monsters' array entries must be of type 'array' and not anything else !");
+                    continue; //Skip entry
+                }
+
+                //Declare monster information
+                int monster_pos_x = -1;
+                int monster_post_y = -1;
+                int monster_speed = -1;
+
+                //Process monsters object
+                int monster_infos_size = tokens[i + j].size;
+                for(int k = 1; k <= monster_infos_size; k++){
+
+                    //Base count
+                    int count = i + j + k;
+
+                    //Determine the kind of value
+                    //X_axis coordinate
+                    if(json_check_two_keys(json_string, &tokens[count], "pos_x") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        monster_pos_x = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Y_axis coordinate
+                    else if(json_check_two_keys(json_string, &tokens[count], "pos_y") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        monster_post_y = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Regeneration interval
+                    else if(json_check_two_keys(json_string, &tokens[count], "speed") == 0 && tokens[i + j + k + 1].type == JSMN_PRIMITIVE){
+                        //Extract and save pos_x value
+                        monster_speed = json_extract_integer(json_string, &tokens[i+j+k+1]);
+                    }
+
+                    //Unexcepted error
+                    else {
+                        log_message(LOG_ERROR, "Parse error : monsters->array_element->property_name : Unrecognized value !");
+                        continue;
+                    }
+
+                    //Increment counter by one
+                    i++;
+
+
+                }
+
+                //Increment i for each object property key
+                i += monster_infos_size;
+
+
+                //Check all the informations required to create the monster are present
+                if(
+                    monster_pos_x < 0 ||
+                    monster_post_y < 0 ||
+                    monster_speed < 0
+                )
+                    //Display error
+                    log_message(LOG_ERROR, "Unefficient informations to create a monster character !");
+                else
+                    //Create the wall
+                    monster_create(monster_pos_x, monster_post_y, monster_speed);
             }
 
             //Include array entries in i

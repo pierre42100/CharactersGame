@@ -62,5 +62,31 @@
 			"pos_y": 12,
 			"regeneration_interval": 1,
 		}
-	]
+	],
+
+	"monsters": [
+		{
+			"pos_x": 6,
+			"pos_y": 9,
+			"speed": 1,
+		},
+
+		{
+			"pos_x": 7,
+			"pos_y": 9,
+			"speed": 1,
+		},
+
+		{
+			"pos_x": 8,
+			"pos_y": 9,
+			"speed": 1,
+		},
+
+		{
+			"pos_x": 6,
+			"pos_y": 11,
+			"speed": 2,
+		}
+	],
 }
