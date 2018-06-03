@@ -12,6 +12,7 @@
 #include "ui.h"
 #include "../config.h"
 #include "../characters/main_character.h"
+#include "../characters/monster.h"
 #include "character.h"
 #include "game_menu.h"
 #include "game_started.h"
@@ -32,14 +33,14 @@ static int game_state = GAME_STATE_MENU;
 static pthread_t game_routine_thread;
 
 /**
- * Initializate game
+ * Initialize game
  */
 void game_init(){
 
     //Inform about what is happening
     log_message(LOG_VERBOSE, "Initializating application...");
 
-    //Initializate the SDL library
+    //Initialize the SDL library
     ui_init();
 
     //Load the background
@@ -226,12 +227,14 @@ void *game_routine_thread_function(void *param){
             //Log action
             log_message(LOG_VERBOSE, "Perform game routine");
 
-            //Call game routine (not implemented yet)
+            //Call game routines
 
+            //Monsters routine
+            monster_routine();
         }
 
         //Make a pause
-        usleep(PAUSE_BETWEEN_GAME_ROUTINES * 1000000);
+        usleep(PAUSE_BETWEEN_GAME_ROUTINES * 50000);
 
     }
 

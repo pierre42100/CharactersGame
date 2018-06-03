@@ -19,6 +19,7 @@
 #include "cross.h"
 #include "pizza.h"
 #include "heart.h"
+#include "monster.h"
 
 static MainCharacter *main_character = NULL;
 
@@ -46,7 +47,7 @@ void main_character_create(){
     //Set main character score to 0
     new_character.score = 0;
 
-    //Save new main charater
+    //Save new main character
     //Allocate memory for the character
     main_character = malloc(sizeof(MainCharacter));
 
@@ -80,6 +81,10 @@ void main_character_destroy(){
 void main_character_display(){
     //Display the main character
     character_display(&main_character->character);
+}
+
+MainCharacter *main_character_get(){
+    return main_character;
 }
 
 /**
@@ -116,6 +121,9 @@ void main_character_move(int movement){
 
     //Perform "heart check"
     heart_check_main_character(&main_character->character);
+
+    //Perform "monster check"
+    monster_check_main_character(&main_character->character);
 
 }
 

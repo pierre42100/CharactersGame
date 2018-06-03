@@ -39,6 +39,11 @@ void main_character_destroy();
 void main_character_display();
 
 /**
+ * Get the main character object
+ */
+MainCharacter* main_character_get();
+
+/**
  * Set new location for the main character
  *
  * @param int x

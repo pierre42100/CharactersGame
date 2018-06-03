@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <string.h>
+#include <time.h>
 
 #include "../config.h"
 #include "logging.h"
@@ -22,11 +23,15 @@
 #include "../characters/cross.h"
 #include "../characters/pizza.h"
 #include "../characters/heart.h"
+#include "../characters/monster.h"
 
 /**
  * Start the game
  */
 void game_started_start(){
+
+    //Initialize random
+    srand(time(0));
 
     //Display loading message
     ui_utils_display_loading_message();
@@ -40,6 +45,11 @@ void game_started_start(){
     //Parse JSON file
     char json_file[] = "game.json";
     json_parse_game_file(json_file);
+
+    //TODO : remove
+    monster_create(10, 10, 1);
+    monster_create(15, 15, 2);
+    monster_create(20, 20, 3);
 
     //Update game state
     game_update_state(GAME_STATE_STARTED);
@@ -73,6 +83,9 @@ void game_started_stop(){
 
     //Destroy all the hearts characters
     heart_destroy_all();
+
+    //Destroy all monsters
+    monster_destroy_all();
 
     //Update game state
     game_update_state(GAME_STATE_MENU);
@@ -176,6 +189,9 @@ void game_started_refresh_window(){
 
     //Display hearts
     heart_display_all();
+
+    //Display all the monsters
+    monster_display_all();
 
     //Display the main character
     main_character_display();
