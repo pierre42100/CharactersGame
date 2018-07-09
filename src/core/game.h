@@ -16,6 +16,7 @@
 #define GAME_STATE_STARTED 1
 #define GAME_STATE_PAUSED 2
 #define GAME_STATE_OVER 3
+#define GAME_STATE_EDITOR 4
 
 
 /**

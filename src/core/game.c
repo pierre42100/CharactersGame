@@ -18,6 +18,7 @@
 #include "game_started.h"
 #include "game_paused.h"
 #include "game_over.h"
+#include "game_editor.h"
 #include "game.h"
 
 //This variables defines if the application has to be left or not
@@ -182,6 +183,11 @@ void game_refresh_screen(){
         //The game is over
         case GAME_STATE_OVER:
             game_over_display();
+        break;
+
+        //The game editor is opened
+        case GAME_STATE_EDITOR:
+            game_editor_display();
         break;
     }
 

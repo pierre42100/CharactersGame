@@ -9,7 +9,8 @@
   * Menu options IDs
   */
 #define MENU_OPTION_START_GAME 1
-#define MENU_OPTION_QUIT_GAME 2s
+#define MENU_OPTION_EDITOR 2
+#define MENU_OPTION_QUIT_GAME 3
 
 /**
  * Display game menu

@@ -10,6 +10,7 @@
 #include "game_started.h"
 #include "ui.h"
 #include "menu.h"
+#include "game_editor.h"
 #include "game_menu.h"
 
 /**
@@ -43,6 +44,7 @@ void game_menu_display(){
 
         //Add menu options
         menu_add_option(menu, "Start game", MENU_OPTION_START_GAME);
+        menu_add_option(menu, "Map editor", MENU_OPTION_EDITOR);
         menu_add_option(menu, "Quit game", MENU_OPTION_QUIT_GAME);
     }
 
@@ -61,9 +63,15 @@ void game_menu_handle_events(SDL_Event *event){
 
     //Check what to do now
     switch(action){
+
         //Start game
         case MENU_OPTION_START_GAME:
             game_started_start();
+        break;
+
+        //Game editor
+        case MENU_OPTION_EDITOR:
+            game_editor_open();
         break;
 
         //Quit game

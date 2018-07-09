@@ -73,6 +73,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/core/game.h" />
+		<Unit filename="src/core/game_editor.c" >
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/core/game_editor.h" />
 		<Unit filename="src/core/game_menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
