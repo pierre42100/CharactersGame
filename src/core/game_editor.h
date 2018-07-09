@@ -17,4 +17,11 @@ void game_editor_open();
  */
 void game_editor_display();
 
+/**
+ * Handles game events
+ *
+ * @param SDL_Event *event The event to handles
+ */
+void game_editor_handles_events(SDL_Event *event);
+
 #endif // GAME_EDITOR_H_INCLUDED

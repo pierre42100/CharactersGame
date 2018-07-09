@@ -141,6 +141,11 @@ void game_handle_event(SDL_Event *event){
         case GAME_STATE_OVER:
             game_over_handles_events(event);
         break;
+
+        //The game is in editor state
+        case GAME_STATE_EDITOR:
+            game_editor_handles_events(event);
+        break;
     }
 
 }
