@@ -10,6 +10,7 @@
 #include "game_started.h"
 #include "ui.h"
 #include "menu.h"
+#include "game_menu.h"
 
 /**
  * Variables definition
@@ -41,8 +42,8 @@ void game_menu_display(){
         *menu = menu_create(TEXTURE_MAIN_MENU, "Main menu");
 
         //Add menu options
-        menu_add_option(menu, "Start game", 1);
-        menu_add_option(menu, "Quit game", 2);
+        menu_add_option(menu, "Start game", MENU_OPTION_START_GAME);
+        menu_add_option(menu, "Quit game", MENU_OPTION_QUIT_GAME);
     }
 
     //Display the menu
@@ -61,12 +62,12 @@ void game_menu_handle_events(SDL_Event *event){
     //Check what to do now
     switch(action){
         //Start game
-        case 1:
+        case MENU_OPTION_START_GAME:
             game_started_start();
         break;
 
         //Quit game
-        case 2:
+        case MENU_OPTION_QUIT_GAME:
             game_quit();
         break;
     }

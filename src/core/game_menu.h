@@ -5,6 +5,12 @@
  * Game menu header file
  */
 
+ /**
+  * Menu options IDs
+  */
+#define MENU_OPTION_START_GAME 1
+#define MENU_OPTION_QUIT_GAME 2s
+
 /**
  * Display game menu
  */
