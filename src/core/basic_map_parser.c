@@ -14,6 +14,7 @@
 #include "../characters/pizza.h"
 #include "../characters/heart.h"
 #include "../characters/monster.h"
+#include "../characters/main_character.h"
 
 char basic_map_parser_character_type_to_char(const CharacterType type){
 
