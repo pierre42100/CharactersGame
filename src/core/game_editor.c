@@ -24,6 +24,76 @@ Character cursor;
  */
 CharacterType map[GAME_GRID_ROW_COUNT][GAME_GRID_COL_COUNT];
 
+/**
+ * Parse the content of a file into the map
+ *
+ * @param const char *filename The name of the file to open
+ */
+void parse_file(const char *filename){
+
+    //Try to open the file
+    FILE* file = fopen(filename, "r");
+    if(!file){
+        log_message(LOG_ERROR, "Could not open map file!");
+        return;
+    }
+
+    //Parse it
+    char c = fgetc(file);
+
+    int x = 0;
+    int y = 0;
+
+    while(c != EOF){
+
+        if(c == '\n'){
+            x++;
+            y = 0;
+        }
+
+        else {
+
+            //Parse this new character into a type
+            CharacterType type;
+            switch(c){
+
+                case '1':
+                    type = CROSS;
+                    break;
+
+                case '2':
+                    type = HEART;
+                    break;
+
+                case '3':
+                    type = MONSTER;
+                    break;
+
+                case '4':
+                    type = PIZZA;
+                    break;
+
+                case '5':
+                    type = WALL;
+                    break;
+
+                default:
+                    type = NOTHING;
+            }
+
+            //Save new character
+            map[x][y] = type;
+            y++;
+        }
+
+        //Read a new character
+        c = fgetc(file);
+    }
+
+    //Close the file
+    fclose(file);
+}
+
 void game_editor_open() {
 
     log_message(LOG_VERBOSE, "Opening game editor...");
@@ -39,6 +109,9 @@ void game_editor_open() {
         for(int j = 0; j < GAME_GRID_COL_COUNT; j++)
             map[i][j] = NOTHING;
     }
+
+    //Import file (if any)
+    parse_file(MAP_FILE);
 }
 
 /**
@@ -185,6 +258,10 @@ void save_map(){
 
                 case PIZZA:
                     character = '4';
+                    break;
+
+                case WALL:
+                    character = '5';
                     break;
 
                 default:
