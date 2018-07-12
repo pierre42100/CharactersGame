@@ -15,6 +15,7 @@
 #include "../characters/main_character.h"
 #include "character.h"
 #include "json.h"
+#include "basic_map_parser.h"
 #include "game_started.h"
 #include "game_paused.h"
 #include "game.h"
@@ -42,9 +43,12 @@ void game_started_start(){
     //Load main character
     main_character_create();
 
-    //Parse JSON file
+    /*//Parse JSON file
     char json_file[] = "game.json";
-    json_parse_game_file(json_file);
+    json_parse_game_file(json_file);*/
+
+    //Parse basic map
+    basic_map_parser_parse_map(MAP_FILE);
 
     //Update game state
     game_update_state(GAME_STATE_STARTED);

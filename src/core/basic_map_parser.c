@@ -9,6 +9,12 @@
 #include "basic_map_parser.h"
 #include "logging.h"
 
+#include "../characters/wall.h"
+#include "../characters/cross.h"
+#include "../characters/pizza.h"
+#include "../characters/heart.h"
+#include "../characters/monster.h"
+
 char basic_map_parser_character_type_to_char(const CharacterType type){
 
     char character;
@@ -129,6 +135,35 @@ Map basic_map_parser_character_load_map(const char *filename){
 
 void basic_map_parser_parse_map(const char *filename){
 
+    //Get the map
+    Map map = basic_map_parser_character_load_map(filename);
+
+    //Process the map
+    for(int i = 0; i < GAME_GRID_ROW_COUNT; i++){
+        for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
+
+            CharacterType type = map.characters[i][j];
+
+            //Check if there is not anything to be done
+            if(type == NOTHING)
+                continue;
+
+            if(type == CROSS)
+                 cross_create(i, j);
+
+            if(type == HEART)
+                heart_create(i, j, 2);
+
+            if(type == MONSTER)
+                monster_create(i, j, 2);
+
+            if(type == PIZZA)
+                pizza_create(i, j, 2);
+
+            if(type == WALL)
+                wall_create(i, j);
 
 
+        }
+    }
 }
