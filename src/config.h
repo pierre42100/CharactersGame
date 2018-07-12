@@ -13,6 +13,9 @@
 //Ressources directory
 #define RES_DIRECTORY "res/"
 
+//The name of the map
+#define MAP_FILE "map.txt"
+
 //Main font
 #define FONT_FILE "res/UbuntuMono-B.ttf"
 #define FONT_PTSIZE 34 //Size of the font to load

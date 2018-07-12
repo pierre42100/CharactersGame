@@ -150,6 +150,59 @@ void process_update_event(SDL_Event *event) {
     map[x][y] = newType;
 }
 
+void save_map(){
+
+    //Log action
+    log_message(LOG_MESSAGE, "Saving new map");
+
+    //Save the map
+    FILE* file = fopen(MAP_FILE, "w+");
+
+    if(file == NULL){
+        log_message(LOG_ERROR, "Could not open the file!");
+        return;
+    }
+
+    //Process the map
+    for(int i = 0; i < GAME_GRID_ROW_COUNT; i++){
+        for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
+
+            //Turn the caracter into an integer and append it to the file
+            char character;
+            switch(map[i][j]){
+
+                case CROSS:
+                    character = '1';
+                    break;
+
+                case HEART:
+                    character = '2';
+                    break;
+
+                case MONSTER:
+                    character = '3';
+                    break;
+
+                case PIZZA:
+                    character = '4';
+                    break;
+
+                default:
+                    character = '0';
+                    break;
+
+            }
+
+            fputc(character, file);
+
+        }
+        fputc('\n', file);
+    }
+
+    //Close the file
+    fclose(file);
+}
+
 void game_editor_handles_events(SDL_Event *event) {
 
     //Determine the nature of the current event
@@ -197,10 +250,14 @@ void game_editor_handles_events(SDL_Event *event) {
                     process_update_event(event);
                 break;
 
+                //Save the map
+                case SDLK_RETURN:
+                    save_map();
+                break;
+
                 //Pause the game
                 case SDLK_ESCAPE:
-                case SDLK_p:
-
+                    game_update_state(GAME_STATE_MENU);
                 break;
 
             }
