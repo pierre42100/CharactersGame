@@ -53,36 +53,8 @@ void parse_file(const char *filename){
 
         else {
 
-            //Parse this new character into a type
-            CharacterType type;
-            switch(c){
-
-                case '1':
-                    type = CROSS;
-                    break;
-
-                case '2':
-                    type = HEART;
-                    break;
-
-                case '3':
-                    type = MONSTER;
-                    break;
-
-                case '4':
-                    type = PIZZA;
-                    break;
-
-                case '5':
-                    type = WALL;
-                    break;
-
-                default:
-                    type = NOTHING;
-            }
-
             //Save new character
-            map[x][y] = type;
+            map[x][y] = basic_map_parser_char_to_character_type(c);
             y++;
         }
 
@@ -241,36 +213,7 @@ void save_map(){
         for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
 
             //Turn the caracter into an integer and append it to the file
-            char character;
-            switch(map[i][j]){
-
-                case CROSS:
-                    character = '1';
-                    break;
-
-                case HEART:
-                    character = '2';
-                    break;
-
-                case MONSTER:
-                    character = '3';
-                    break;
-
-                case PIZZA:
-                    character = '4';
-                    break;
-
-                case WALL:
-                    character = '5';
-                    break;
-
-                default:
-                    character = '0';
-                    break;
-
-            }
-
-            fputc(character, file);
+            fputc(basic_map_parser_character_type_to_char(map[i][j]), file);
 
         }
         fputc('\n', file);

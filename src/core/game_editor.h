@@ -7,18 +7,7 @@
  * @author Pierre HUBERT
  */
 
- /**
-  * Characters type
-  */
-enum character_type {
-    NOTHING,
-    CROSS,
-    HEART,
-    MONSTER,
-    PIZZA,
-    WALL
-};
-typedef enum character_type CharacterType;
+ #include "basic_map_parser.h"
 
 /**
  * Open game editor
