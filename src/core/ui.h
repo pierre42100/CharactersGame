@@ -18,7 +18,15 @@
  */
 #define NUMBER_TEXTURES 16
 
-//Included images
+//Included images path
+#define PATH_IMG_CROSS RES_DIRECTORY"cross.png"
+#define PATH_IMG_HEART RES_DIRECTORY"big_heart.png"
+#define PATH_IMG_MAIN_CHARACTER RES_DIRECTORY"character.png"
+#define PATH_IMG_MONSTER RES_DIRECTORY"bug.png"
+#define PATH_IMG_PIZZA RES_DIRECTORY"pizza.png"
+#define PATH_IMG_WALL RES_DIRECTORY"wall.png"
+
+//Included images list
 #define TEXTURE_GRASS 0
 #define TEXTURE_MAIN_CHARACTER 3
 #define TEXTURE_WALL 6

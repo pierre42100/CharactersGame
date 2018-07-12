@@ -36,7 +36,7 @@ void wall_create(int x, int y){
     new_wall = malloc(sizeof(Wall));
 
     //Load the character
-    new_wall->character = character_load(RES_DIRECTORY"wall.png", TEXTURE_WALL);
+    new_wall->character = character_load(PATH_IMG_WALL, TEXTURE_WALL);
 
     //Check for errors
     if(new_wall == NULL)

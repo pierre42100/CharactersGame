@@ -26,7 +26,7 @@ void monster_create(int x, int y, int speed){
         fatal_error("Could not allocate memory to create a new monster !");
 
     //Load the character
-    monster->character = character_load(RES_DIRECTORY"bug.png", TEXTURE_MONSTER_CHARACTER);
+    monster->character = character_load(PATH_IMG_MONSTER, TEXTURE_MONSTER_CHARACTER);
 
     //Set monster settings
     monster->character.pos_x = x;

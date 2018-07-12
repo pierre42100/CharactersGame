@@ -45,7 +45,7 @@ void heart_create(int x, int y,  int regeneration_interval){
         fatal_error("Couldn't allocate memory for the new heart !");
 
     //Load the character
-    new_heart->character = character_load(RES_DIRECTORY"big_heart.png", TEXTURE_HEART_CHARACTER);
+    new_heart->character = character_load(PATH_IMG_HEART, TEXTURE_HEART_CHARACTER);
 
     //Check if it isn't the first heart of the list
     if(new_heart != NULL){

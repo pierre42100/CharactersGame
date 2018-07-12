@@ -38,7 +38,7 @@ void cross_create(int x, int y){
         fatal_error("Couldn't allocate memory for the new cross !");
 
     //Load the character
-    new_cross->character = character_load(RES_DIRECTORY"cross.png", TEXTURE_CROSS);
+    new_cross->character = character_load(PATH_IMG_CROSS, TEXTURE_CROSS);
 
     //Check if it isn't the first cross of the list
     if(new_cross != NULL){

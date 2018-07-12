@@ -35,7 +35,7 @@ void main_character_create(){
     MainCharacter new_character;
 
     //Create the character
-    new_character.character = character_load(RES_DIRECTORY"character.png", TEXTURE_MAIN_CHARACTER);
+    new_character.character = character_load(PATH_IMG_MAIN_CHARACTER, TEXTURE_MAIN_CHARACTER);
 
     //Place the character on the center of the screen
     new_character.character.pos_x = (GAME_NB_CELL_X_AXIS)/2;

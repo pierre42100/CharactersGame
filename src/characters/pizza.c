@@ -42,7 +42,7 @@ void pizza_create(int x, int y,  int regeneration_interval){
         fatal_error("Couldn't allocate memory for the new pizza !");
 
     //Load the character
-    new_pizza->character = character_load(RES_DIRECTORY"pizza.png", TEXTURE_PIZZA);
+    new_pizza->character = character_load(PATH_IMG_PIZZA, TEXTURE_PIZZA);
 
     //Check if it isn't the first pizza of the list
     if(new_pizza != NULL){
