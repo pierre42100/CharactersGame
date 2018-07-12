@@ -78,7 +78,7 @@ void display_characters(){
                  character = character_load(PATH_IMG_CROSS, TEXTURE_CROSS);
 
             if(type == HEART)
-                character = character_load(PATH_IMG_HEART, TEXTURE_HEART);
+                character = character_load(PATH_IMG_HEART, TEXTURE_HEART_CHARACTER);
 
             if(type == MONSTER)
                 character = character_load(PATH_IMG_MONSTER, TEXTURE_MONSTER_CHARACTER);
