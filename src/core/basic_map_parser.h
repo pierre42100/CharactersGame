@@ -18,7 +18,8 @@ enum character_type {
     HEART,
     MONSTER,
     PIZZA,
-    WALL
+    WALL,
+    MAIN_CHARACTER
 };
 typedef enum character_type CharacterType;
 
@@ -62,5 +63,12 @@ Map basic_map_parser_character_load_map(const char *filename);
  * @param const char *filename The name of the file to parse
  */
 void basic_map_parser_parse_map(const char *filename);
+
+/**
+ * Remove the main character from a map
+ *
+ * @param Map *map The map to process
+ */
+void basic_map_parser_remove_main_character(Map *map);
 
 #endif // BASIC_MAP_PARSER_H_INCLUDED

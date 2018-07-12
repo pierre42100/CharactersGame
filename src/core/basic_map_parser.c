@@ -41,6 +41,10 @@ char basic_map_parser_character_type_to_char(const CharacterType type){
             character = '5';
             break;
 
+        case MAIN_CHARACTER:
+            character = '6';
+            break;
+
         default:
             character = '0';
             break;
@@ -76,6 +80,10 @@ CharacterType basic_map_parser_char_to_character_type(const char c){
 
         case '5':
             type = WALL;
+            break;
+
+        case '6':
+            type = MAIN_CHARACTER;
             break;
 
         default:
@@ -163,6 +171,23 @@ void basic_map_parser_parse_map(const char *filename){
             if(type == WALL)
                 wall_create(i, j);
 
+            if(type == MAIN_CHARACTER)
+                main_character_set_location(i, j);
+
+
+        }
+    }
+}
+
+void basic_map_parser_remove_main_character(Map *map){
+
+    //Process the map
+    for(int i = 0; i < GAME_GRID_ROW_COUNT; i++){
+        for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
+
+            //If the caracter is a main character, remove it
+            if(map->characters[i][j] == MAIN_CHARACTER)
+                map->characters[i][j] = NOTHING;
 
         }
     }

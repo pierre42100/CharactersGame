@@ -89,6 +89,9 @@ void display_characters(){
             if(type == WALL)
                 character = character_load(PATH_IMG_WALL, TEXTURE_WALL);
 
+            if(type == MAIN_CHARACTER)
+                character = character_load(PATH_IMG_MAIN_CHARACTER, TEXTURE_MAIN_CHARACTER);
+
             character.pos_x = i;
             character.pos_y = j;
             character_display(&character);
@@ -134,6 +137,11 @@ void process_update_event(SDL_Event *event) {
 
         case SDLK_5:
             newType = WALL;
+            break;
+
+        case SDLK_6:
+            basic_map_parser_remove_main_character(&map);
+            newType = MAIN_CHARACTER;
             break;
 
         //Default = nothing
@@ -219,6 +227,7 @@ void game_editor_handles_events(SDL_Event *event) {
                 case SDLK_3:
                 case SDLK_4:
                 case SDLK_5:
+                case SDLK_6:
                     process_update_event(event);
                 break;
 
