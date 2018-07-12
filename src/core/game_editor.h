@@ -7,6 +7,19 @@
  * @author Pierre HUBERT
  */
 
+ /**
+  * Characters type
+  */
+enum character_type {
+    NOTHING,
+    CROSS,
+    HEART,
+    MONSTER,
+    PIZZA,
+    WALL
+};
+typedef enum character_type CharacterType;
+
 /**
  * Open game editor
  */
