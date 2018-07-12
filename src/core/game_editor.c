@@ -20,51 +20,9 @@
 Character cursor;
 
 /**
- * The content of the map
+ * The map
  */
-CharacterType map[GAME_GRID_ROW_COUNT][GAME_GRID_COL_COUNT];
-
-/**
- * Parse the content of a file into the map
- *
- * @param const char *filename The name of the file to open
- */
-void parse_file(const char *filename){
-
-    //Try to open the file
-    FILE* file = fopen(filename, "r");
-    if(!file){
-        log_message(LOG_ERROR, "Could not open map file!");
-        return;
-    }
-
-    //Parse it
-    char c = fgetc(file);
-
-    int x = 0;
-    int y = 0;
-
-    while(c != EOF){
-
-        if(c == '\n'){
-            x++;
-            y = 0;
-        }
-
-        else {
-
-            //Save new character
-            map[x][y] = basic_map_parser_char_to_character_type(c);
-            y++;
-        }
-
-        //Read a new character
-        c = fgetc(file);
-    }
-
-    //Close the file
-    fclose(file);
-}
+Map map;
 
 void game_editor_open() {
 
@@ -76,14 +34,8 @@ void game_editor_open() {
     cursor.pos_x = 0;
     cursor.pos_y = 0;
 
-    //Reset table
-    for(int i = 0; i < GAME_GRID_ROW_COUNT; i++){
-        for(int j = 0; j < GAME_GRID_COL_COUNT; j++)
-            map[i][j] = NOTHING;
-    }
-
     //Import file (if any)
-    parse_file(MAP_FILE);
+    map = basic_map_parser_character_load_map(MAP_FILE);
 }
 
 /**
@@ -113,7 +65,7 @@ void display_characters(){
     for(int i = 0; i < GAME_GRID_ROW_COUNT; i++){
         for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
 
-            CharacterType type = map[i][j];
+            CharacterType type = map.characters[i][j];
 
             //Check if there is not anything to be done
             if(type == NOTHING)
@@ -192,7 +144,7 @@ void process_update_event(SDL_Event *event) {
     //Apply new character
     int x = cursor.pos_x;
     int y = cursor.pos_y;
-    map[x][y] = newType;
+    map.characters[x][y] = newType;
 }
 
 void save_map(){
@@ -213,7 +165,7 @@ void save_map(){
         for(int j = 0; j < GAME_GRID_COL_COUNT; j++){
 
             //Turn the caracter into an integer and append it to the file
-            fputc(basic_map_parser_character_type_to_char(map[i][j]), file);
+            fputc(basic_map_parser_character_type_to_char(map.characters[i][j]), file);
 
         }
         fputc('\n', file);
