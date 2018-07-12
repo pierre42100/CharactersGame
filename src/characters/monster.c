@@ -8,6 +8,7 @@
 
 #include "../config.h"
 #include "monster.h"
+#include "wall.h"
 #include "main_character.h"
 #include "../core/ui.h"
 #include "../core/logging.h"
@@ -109,8 +110,17 @@ void monsters_move(){
             break;
         }
 
-        for(int i = 0; i < curr_monster->speed; i++)
+        for(int i = 0; i < curr_monster->speed; i++){
             character_move(&curr_monster->character, move);
+
+            //Check if the bug is on a wall or not
+            if(wall_check_character_presence(&curr_monster->character)){
+                //Revert move
+                curr_monster->character.pos_x = curr_monster->character.old_pos_x;
+                curr_monster->character.pos_y = curr_monster->character.old_pos_y;
+            }
+        }
+
 
         //Get the next monster
         curr_monster = curr_monster->next;
